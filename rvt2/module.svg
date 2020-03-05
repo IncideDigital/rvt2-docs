@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:xhtml="http://www.w3.org/1999/xhtml"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="157.34041mm"
+   height="71.70208mm"
+   viewBox="0 0 157.34041 71.70208"
+   version="1.1"
+   id="svg3177"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="module.svg">
+  <defs
+     id="defs3171">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3800"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4102"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4100"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path3803"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="286.14187"
+     inkscape:cy="101.00556"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g3792"
+     showgrid="true"
+     inkscape:snap-grids="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1874"
+     inkscape:window-height="1051"
+     inkscape:window-x="46"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3794"
+       originx="-27.57746"
+       originy="-77.541808" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3174">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-27.57746,-147.75611)">
+    <g
+       id="g3792">
+      <g
+         id="g10722">
+        <rect
+           x="65.767853"
+           y="147.8884"
+           width="52.916668"
+           height="71.4375"
+           rx="7.9375"
+           ry="7.9375"
+           pointer-events="none"
+           id="rect16"
+           style="fill:#dae8fc;stroke:#6c8ebf;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none" />
+        <path
+           sodipodi:nodetypes="ccc"
+           inkscape:connector-curvature="0"
+           id="path3798"
+           d="m 48.947917,211.01042 c 21.166666,0 42.333333,5.29166 42.333333,-27.78125 h 37.04167"
+           style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lstart)" />
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="path3796"
+           d="M 55.5625,159.41667 H 91.28125 M 92.604167,170 c 10.583333,0 3.96875,0 41.010413,0"
+           style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lend);marker-end:url(#Arrow1Lend)" />
+        <rect
+           x="71.059525"
+           y="166.40923"
+           width="42.333332"
+           height="50.270832"
+           rx="6.3499999"
+           ry="6.3499999"
+           pointer-events="none"
+           id="rect18"
+           style="fill:#fff2cc;stroke:#d6b656;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none" />
+        <rect
+           x="71.059525"
+           y="153.18005"
+           width="42.333332"
+           height="10.583333"
+           rx="1.5875"
+           ry="1.5875"
+           pointer-events="none"
+           id="rect20"
+           style="fill:#fff2cc;stroke:#d6b656;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none" />
+        <g
+           transform="matrix(0.26458333,0,0,0.26458333,76.35119,156.88423)"
+           id="g26">
+          <switch
+             id="switch24">
+            <foreignObject
+               style="overflow:visible;"
+               pointer-events="all"
+               width="120"
+               height="12"
+               requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+              <xhtml:div
+                 style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 121px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                <xhtml:div
+                   style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">Do something on path</xhtml:div>
+              </xhtml:div>
+            </foreignObject>
+            <text
+               x="60"
+               y="12"
+               font-size="12px"
+               id="text22"
+               style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">Do something on path</text>
+          </switch>
+        </g>
+        <rect
+           x="76.351189"
+           y="176.99255"
+           width="31.75"
+           height="10.583333"
+           rx="1.5875"
+           ry="1.5875"
+           pointer-events="none"
+           id="rect28"
+           style="fill:#d5e8d4;stroke:#82b366;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none" />
+        <g
+           transform="matrix(0.26458333,0,0,0.26458333,76.880357,178.58006)"
+           id="g34">
+          <switch
+             id="switch32">
+            <foreignObject
+               style="overflow:visible;"
+               pointer-events="all"
+               width="116"
+               height="27"
+               requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+              <xhtml:div
+                 style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 116px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                <xhtml:div
+                   style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">Get data from_module</xhtml:div>
+              </xhtml:div>
+            </foreignObject>
+            <text
+               x="58"
+               y="20"
+               font-size="12px"
+               id="text30"
+               style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">Get data from_module</text>
+          </switch>
+        </g>
+        <rect
+           x="76.351189"
+           y="190.22173"
+           width="31.75"
+           height="10.583333"
+           rx="1.5875"
+           ry="1.5875"
+           pointer-events="none"
+           id="rect36"
+           style="fill:#d5e8d4;stroke:#82b366;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none" />
+        <g
+           transform="matrix(0.26458333,0,0,0.26458333,82.172023,193.92589)"
+           id="g42">
+          <switch
+             id="switch40">
+            <foreignObject
+               style="overflow:visible;"
+               pointer-events="all"
+               width="76"
+               height="12"
+               requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+              <xhtml:div
+                 style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 77px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                <xhtml:div
+                   style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">Do something</xhtml:div>
+              </xhtml:div>
+            </foreignObject>
+            <text
+               x="38"
+               y="12"
+               font-size="12px"
+               id="text38"
+               style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">Do something</text>
+          </switch>
+        </g>
+        <rect
+           x="76.351189"
+           y="203.4509"
+           width="31.75"
+           height="10.583333"
+           rx="1.5875"
+           ry="1.5875"
+           pointer-events="none"
+           id="rect44"
+           style="fill:#d5e8d4;stroke:#82b366;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none" />
+        <g
+           transform="matrix(0.26458333,0,0,0.26458333,85.08244,207.15506)"
+           id="g50">
+          <switch
+             id="switch48">
+            <foreignObject
+               style="overflow:visible;"
+               pointer-events="all"
+               width="53"
+               height="12"
+               requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+              <xhtml:div
+                 style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 54px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                <xhtml:div
+                   style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">yield data</xhtml:div>
+              </xhtml:div>
+            </foreignObject>
+            <text
+               x="27"
+               y="12"
+               font-size="12px"
+               id="text46"
+               style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">yield data</text>
+          </switch>
+        </g>
+        <g
+           transform="matrix(0.26458333,0,0,0.26458333,76.615773,167.99673)"
+           id="g56">
+          <switch
+             id="switch54">
+            <foreignObject
+               style="overflow:visible;"
+               pointer-events="all"
+               width="118"
+               height="27"
+               requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+              <xhtml:div
+                 style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 118px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                <xhtml:div
+                   style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">While from_module has data</xhtml:div>
+              </xhtml:div>
+            </foreignObject>
+            <text
+               x="59"
+               y="20"
+               font-size="12px"
+               id="text52"
+               style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">While from_module has data</text>
+          </switch>
+        </g>
+        <text
+           id="text10630"
+           y="160.35211"
+           x="27.192987"
+           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           xml:space="preserve"><tspan
+             style="font-size:4.23333311px;stroke-width:0.26458332"
+             y="160.35211"
+             x="27.192987"
+             id="tspan10628"
+             sodipodi:role="line">run(path)</tspan></text>
+        <text
+           id="text10630-7"
+           y="171.30949"
+           x="136.03816"
+           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           xml:space="preserve"><tspan
+             style="font-size:4.23333311px;stroke-width:0.26458332"
+             y="171.30949"
+             x="136.03816"
+             id="tspan10628-9"
+             sodipodi:role="line">from_module.run(path)</tspan></text>
+        <text
+           id="text10652"
+           y="212.21313"
+           x="32.778786"
+           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           xml:space="preserve"><tspan
+             style="font-size:4.23333311px;stroke-width:0.26458332"
+             y="212.21313"
+             x="32.778786"
+             id="tspan10650"
+             sodipodi:role="line">[dict()]</tspan></text>
+        <text
+           id="text10652-2"
+           y="184.44328"
+           x="137.85533"
+           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           xml:space="preserve"><tspan
+             style="font-size:4.23333311px;stroke-width:0.26458332"
+             y="184.44328"
+             x="137.85533"
+             id="tspan10650-0"
+             sodipodi:role="line">[dict()]</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

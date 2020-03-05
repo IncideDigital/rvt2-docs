@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:xhtml="http://www.w3.org/1999/xhtml"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="172.37604mm"
+   height="69.056252mm"
+   viewBox="0 0 172.37604 69.056252"
+   version="1.1"
+   id="svg2439"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="composite_job.svg"
+   inkscape:export-filename="/home/jvera/Downloads/composite_job.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2433" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="210.27544"
+     inkscape:cy="-132.51981"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1874"
+     inkscape:window-height="1051"
+     inkscape:window-x="46"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2436">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-9.0619806,-124.88854)">
+    <g
+       transform="matrix(0.26458333,0,0,0.26458333,-20.703644,27.125002)"
+       id="g1608">
+      <rect
+         x="113"
+         y="370"
+         width="140"
+         height="260"
+         rx="21"
+         ry="21"
+         pointer-events="none"
+         id="rect4"
+         style="fill:#e1d5e7;stroke:#9673a6" />
+      <rect
+         x="122.5"
+         y="480"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect374"
+         style="fill:#fff2cc;stroke:#d6b656" />
+      <g
+         transform="translate(124.5,496.5)"
+         id="g380">
+        <switch
+           id="switch378">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="116"
+             height="27"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 116px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">run_job(path, modules)</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="58"
+             y="20"
+             font-size="12px"
+             id="text376"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">run_job(path, modules)</text>
+        </switch>
+      </g>
+      <path
+         d="m 243,500 h 357 q 10,0 10,10 v 7.5 q 0,7.5 -10,7.5 H 251.24"
+         stroke-miterlimit="10"
+         pointer-events="none"
+         id="path382"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10" />
+      <path
+         d="m 245.24,525 8,-4 -2,4 2,4 z"
+         stroke-miterlimit="10"
+         pointer-events="none"
+         id="path384"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke:#000000;stroke-width:2;stroke-miterlimit:10" />
+      <rect
+         x="282.5"
+         y="480"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect386"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="442.5"
+         y="480"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect388"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="292.5"
+         y="530"
+         width="100"
+         height="20"
+         rx="3"
+         ry="3"
+         pointer-events="none"
+         id="rect390"
+         style="fill:#d5e8d4;stroke:#82b366" />
+      <g
+         transform="translate(311.5,533.5)"
+         id="g396">
+        <switch
+           id="switch394">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="62"
+             height="12"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 63px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">output2.csv</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="31"
+             y="12"
+             font-size="12px"
+             id="text392"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">output2.csv</text>
+        </switch>
+      </g>
+      <rect
+         x="122.5"
+         y="560"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect398"
+         style="fill:#fff2cc;stroke:#d6b656" />
+      <g
+         transform="translate(124.5,576.5)"
+         id="g404">
+        <switch
+           id="switch402">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="116"
+             height="27"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 116px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">run_job(path, modules)</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="58"
+             y="20"
+             font-size="12px"
+             id="text400"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">run_job(path, modules)</text>
+        </switch>
+      </g>
+      <path
+         d="m 243,580 h 510 q 10,0 10,10 v 7.5 q 0,7.5 -10,7.5 H 251.24"
+         stroke-miterlimit="10"
+         pointer-events="none"
+         id="path406"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10" />
+      <path
+         d="m 245.24,605 8,-4 -2,4 2,4 z"
+         stroke-miterlimit="10"
+         pointer-events="none"
+         id="path408"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke:#000000;stroke-width:2;stroke-miterlimit:10" />
+      <rect
+         x="282.5"
+         y="560"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect410"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="442.5"
+         y="560"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect412"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="602.5"
+         y="560"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect414"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="292.5"
+         y="610"
+         width="100"
+         height="20"
+         rx="3"
+         ry="3"
+         pointer-events="none"
+         id="rect416"
+         style="fill:#d5e8d4;stroke:#82b366" />
+      <g
+         transform="translate(311.5,613.5)"
+         id="g422">
+        <switch
+           id="switch420">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="62"
+             height="12"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 63px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">output3.csv</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="31"
+             y="12"
+             font-size="12px"
+             id="text418"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">output3.csv</text>
+        </switch>
+      </g>
+      <rect
+         x="122.5"
+         y="400"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect424"
+         style="fill:#fff2cc;stroke:#d6b656" />
+      <g
+         transform="translate(124.5,416.5)"
+         id="g430">
+        <switch
+           id="switch428">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="116"
+             height="27"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 116px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">run_job(path, modules)</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="58"
+             y="20"
+             font-size="12px"
+             id="text426"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">run_job(path, modules)</text>
+        </switch>
+      </g>
+      <path
+         d="m 243,420 h 510 q 10,0 10,10 v 7.5 q 0,7.5 -10,7.5 H 251.24"
+         stroke-miterlimit="10"
+         pointer-events="none"
+         id="path432"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10" />
+      <path
+         d="m 245.24,445 8,-4 -2,4 2,4 z"
+         stroke-miterlimit="10"
+         pointer-events="none"
+         id="path434"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke:#000000;stroke-width:2;stroke-miterlimit:10" />
+      <rect
+         x="282.5"
+         y="400"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect436"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="292.5"
+         y="450"
+         width="100"
+         height="20"
+         rx="3"
+         ry="3"
+         pointer-events="none"
+         id="rect438"
+         style="fill:#d5e8d4;stroke:#82b366" />
+      <g
+         transform="translate(311.5,453.5)"
+         id="g444">
+        <switch
+           id="switch442">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="62"
+             height="12"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 63px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">output1.csv</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="31"
+             y="12"
+             font-size="12px"
+             id="text440"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">output1.csv</text>
+        </switch>
+      </g>
+      <rect
+         x="442.5"
+         y="400"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect446"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <rect
+         x="602.5"
+         y="400"
+         width="120"
+         height="60"
+         rx="9"
+         ry="9"
+         pointer-events="none"
+         id="rect448"
+         style="fill:#dae8fc;stroke:#6c8ebf" />
+      <g
+         transform="translate(133.5,373.5)"
+         id="g454">
+        <switch
+           id="switch452">
+          <foreignObject
+             style="overflow:visible;"
+             pointer-events="all"
+             width="103"
+             height="12"
+             requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <xhtml:div
+               style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 104px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+              <xhtml:div
+                 style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">run_job(path, jobs)</xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+          <text
+             x="52"
+             y="12"
+             font-size="12px"
+             id="text450"
+             style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000">run_job(path, jobs)</text>
+        </switch>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -40,7 +40,7 @@ module.exports = {
             'contact'
         ],
         // Configure "edit this page"
-        repo: 'http://gitlab.incide.es/incide-repos/rvt2-docs',
+        repo: 'https://github.com/IncideDigital/rvt2-docs',
         repoLabel: 'Contribute!',
         editLinks: true,
         editLinkText: 'Help us to improve this page!',

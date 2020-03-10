@@ -1,7 +1,4 @@
 .vuepress/dist
 *swp
-rvt2/ios.md
-rvt2/indexer.md
-rvt2/common.md
-rvt2/windows.md
-publish.sh
+node_modules
+package-lock.json

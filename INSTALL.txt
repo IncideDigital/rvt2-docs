@@ -3,15 +3,15 @@
 Documentation of the RVT ecosystem.
 
 The documentation uses vuepress (https://vuepress.vuejs.org/). To build the
-system, install yarn and, from this directory, run:
+system, install npm or yarn and, from this directory, run:
 
 ```
-yarn global add vuepress@^1.0
-export PATH=$PATH:$HOME/.yarn/bin
-vuepress dev
+yarn: yarn install && yarn run dev
+npm: npm install && npm run dev
 ```
 
 # First configuration
 
-Some files are created automatically from the RVT2 documentation.
-See the initial lines in `autodoc.sh`. You must run these lines to recreate these files.
+Some packages are created automatically from the RVT2 documentation.
+See the initial lines in `autodoc.sh`. You must run this file lines to
+recreate these packages

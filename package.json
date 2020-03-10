@@ -1,0 +1,24 @@
+{
+  "name": "rvt2-docs",
+  "version": "1.0.0",
+  "description": "Documentation of the RVT ecosystem.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node_modules/.bin/vuepress dev",
+    "build": "node_modules/.bin/vuepress build",
+    "autodocs": "./autodocs.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IncideDigital/rvt2-docs.git"
+  },
+  "author": "Incide Digital Data S.L.",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/IncideDigital/rvt2-docs/issues"
+  },
+  "homepage": "https://incidedigital.github.io/rvt2-docs/",
+  "dependencies": {
+    "vuepress": "^1.3.1"
+  }
+}

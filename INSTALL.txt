@@ -10,8 +10,13 @@ yarn: yarn install && yarn run dev
 npm: npm install && npm run dev
 ```
 
-# First configuration
+# Automated documentation
 
 Some packages are created automatically from the RVT2 documentation.
 See the initial lines in `autodoc.sh`. You must run this file lines to
 recreate these packages
+
+# GitHub
+
+Static web pages are automatically built after pushing to the master
+repository in GitHub. See GitHub Actions.

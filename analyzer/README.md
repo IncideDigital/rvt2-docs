@@ -2,6 +2,8 @@
 
 *RVT2's analyzer* provides a web interface to perform forensic analysis on sources previously indexed in an ElasticSearch server. Using *RVT2's analyzer*, an analyst can run complex queries on document content and metadata, and tag or comment documents.
 
+If you don't have access to an already created RVT2 analyzer, download it from: <https://github.com/IncideDigital/rvt2-analyzer>
+
 ![An example of the mail view](./analyzer.png)
 
 The analyzer is compatible with all modern browsers: Google Chrome, Mozilla Firefox, Microsoft Edge and Safari 10+.

@@ -3,7 +3,7 @@
 These commands will clone the RVT2 source code and install the external dependencies:
 
 ```bash
-> git clone https://gitlab.incide.es/incide-repos/rvt2.git
+> git clone git@github.com:IncideDigital/rvt2.git
 > cd rvt2
 > bash setup.sh run
 ```

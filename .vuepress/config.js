@@ -7,7 +7,8 @@ module.exports = {
         nav: [
             { text: 'Home', link: '/' },
             { text: 'RVT2', link: '/rvt2/' },
-            { text: 'RVT2-analyzer', link: '/analyzer/' }
+            { text: 'RVT2-analyzer', link: '/analyzer/' },
+            { text: 'Resources', link: '/resources/' }
         ],
         sidebar: [
             {
@@ -35,6 +36,12 @@ module.exports = {
                     '/analyzer/',
                     '/analyzer/install',
                     '/analyzer/development'
+                ]
+            },
+            {
+                title: 'Resources',
+                children: [
+                    '/resources/'
                 ]
             },
             'contact'

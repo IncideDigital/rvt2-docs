@@ -4,8 +4,8 @@
   "description": "Documentation of the RVT ecosystem.",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/vuepress dev",
-    "build": "./node_modules/.bin/vuepress build",
+    "dev": "./node_modules/.bin/vuepress dev docs",
+    "build": "./node_modules/.bin/vuepress build docs",
     "autodocs": "./autodocs.sh"
   },
   "repository": {

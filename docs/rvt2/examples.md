@@ -1,5 +1,13 @@
 # Examples
 
+## General configuration
+
+## Common jobs
+
+## Windows
+
+## Indexation
+
 ## Do not use a general directory structure
 
 The default configuration uses the foldr structure introduced in this document.
@@ -20,5 +28,6 @@ in directory `myiphone` (source name) the file `myiphone.zip`.
 `--globals` overwrite a variable in all configuration files. Its syntax is
 `[sectionname:]varname=value`.  If `sectionname` is not provided, `DEFAULT` is
 used.
+
 
 

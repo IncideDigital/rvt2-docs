@@ -19,6 +19,7 @@ Many other plugins use jobs and modules from this plugin to retrieve general inf
 - ``mount``: Mount all partitions of a disk image.
 - ``umount``: Unmount all partitions of a disk image
 - ``fs_timeline``: Generate a timeline of a filesystem according to MFT.
+- ``mft_timeline``: Generate a timeline from an $MFT file.
 - ``allocfiles``: Generate allocated files in a disk image
 - ``characterize``: Describes basic information about disk and partitions.
 - ``strings``: Extract all strings of printable characters (ascii and unicode) from disk data.
@@ -32,6 +33,7 @@ Many other plugins use jobs and modules from this plugin to retrieve general inf
 - ``skype``: Extract contacts, messages, calls from Skype databases
 - ``skype.maindb``: Auxiliary job to call all queries to skype main.db
 - ``teams``: Extract contacts, messages, calls from Teams databases
+- ``mywindows.chrome_hindsight``: Extract information about Chrome's history, cache, downloads and extensions
 
 ### Job `mount`
 
@@ -48,8 +50,8 @@ Examples:
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|ignored. The module mounts `MORGUE/images/CASENAME/SOURCE.extension`, where extension is 001, dd, raw, aff or aff4|``|
-|`vss`||`False`|
+|`path`|If provided, it is an absolute path to the image to mount. If not provided, mount `MORGUE/images/CASENAME/SOURCE.extension`, where extension is 001, dd, raw, aff, aff4, vmdx (experimental) or zip|``|
+|`vss`|If True and the image is a Windows OS, mount Virtual Shadows|`False`|
 |`recovery_keys`|comma separated list of recovery keys for bitlocker encrypted partitions|``|
 |`password`|password for FileVault encrypted volume|``|
 |`partitions`|comma separated list of partitions to mount. Ex: "p03,p05,v1p05"|``|
@@ -62,20 +64,46 @@ Unmount all partitions of a disk image
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|ignored. The module umounts MORGUE/images/CASENAME/SOURCE.extension, where extension is 001, dd, raw, aff or aff4|``|
+|`path`|ignored|``|
 |`mountdir`|unmount all mounted partitions in mountdir. Can be set on "DEFAULT" configuration option|`MORGUE/CASENAME/SOURCE/mnt`|
 
 ### Job `fs_timeline`
 
 Generate a timeline of a filesystem according to MFT.
 
+The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this directory:
+
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_BODY.csv`: The BODY file, created by fls: for each file in the source, a line including all its timestamps
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_TL.csv`: The timeline file, created by mactime: actions "macb" on all files in the source, ordered by date
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_hour_sum.csv`: stats on the timeline file, grouped by hours
+
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|ignored. The module uses MORGUE/images/CASENAME/SOURCE.extension, where extension is 001, dd, raw, aff or aff4|``|
+|`path`|If provided, it is the imagefile or device. If not, the module uses MORGUE/images/CASENAME/SOURCE.extension, where extension is 001, dd, raw, aff, aff4, zip or vmdx|``|
 |`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|Save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
+
+### Job `mft_timeline`
+
+Generate a timeline from an $MFT file.
+
+The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this directory:
+
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_BODY.csv`: The BODY file, created by fls: for each file in the source, a line including all its timestamps
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_TL.csv`: The timeline file, created by mactime: actions "macb" on all files in the source, ordered by date
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`mft_parser`|Application to parse MFT|`/home/juanvi/Incide/Projects/analyzeMFT`|
+|`mactime`||`mactime`|
+|`mft_file`|Path to $MFT file. If not defined, the module uses MORGUE/CASENAME/SOURCE/mnt/p01/$MFT|`MORGUE/CASENAME/SOURCE/mnt/p01/\$MFT`|
+|`outdir`|Save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
+|`source`||`SOURCE`|
+|`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
 ### Job `allocfiles`
 
@@ -103,12 +131,19 @@ Describes basic information about disk and partitions.
 ### Job `strings`
 
 Extract all strings of printable characters (ascii and unicode) from disk data.
-Output files are organized by partition, encoding and allocation status
+Output files are organized by partition, encoding and allocation status in
+`MORGUE/CASENAME/SOURCE/output/strings`
+
+If a path is provided, search for strings in that path. This is useful, for example, for filesystems
+that need an intermediate file to be mounted, such as a bitlocker partition.
+
+If the path is not provided or it is empty, guess the image file from the files avaible in `MORGUE/images/CASENAME`.
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
+|`path`|If provided, the absolute path to the image file. If not, search for image files in the imagedir|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/strings`|
 
 ### Job `search_strings`
@@ -233,8 +268,19 @@ Extract contacts, messages, calls from Teams databases
 |`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/teams`|
 
+### Job `mywindows.chrome_hindsight`
+
+Extract information about Chrome's history, cache, downloads and extensions
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`vss`|process Volume Shadow Snapshots|`False`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/browsers`|
+
 
 :::warning
-This chapter was created automatically using `rvt2 -j help common --params show_vars="" template_file="templates/help_section_complete.mako" outfile="rvt2/common.md"`. Do not modify manually this file.
+This chapter was created automatically using `rvt2 -j help common --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/common.md"`. Do not modify manually this file.
 :::
 

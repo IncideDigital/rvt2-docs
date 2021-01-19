@@ -20,12 +20,15 @@ The *path* to the main job is the path to the folder containing the backup, or a
 
 Save the backup as the folder `%(imagedir)s/CASE_NAME/SOURCE_NAME` or zip file `%(imagedir)s/images/CASE_NAME/SOURCE_NAME.zip`.
 
-If the backup is encrypted, and additinal step to decrypt the backup is needed. Currently, the RVT2 does not include directly the tools to decrypt an iOS backup and you must install an external tool such as <https://github.com/dinosec/iphone-dataprotection>. Once installed, add this configuration to the RVT2:
+If the backup is encrypted, an additinal step to decrypt the backup is needed. Currently, the RVT2 does not include directly the tools to decrypt an iOS backup and you must install or clone an external tool such as <https://github.com/dinosec/iphone-dataprotection>. Once installed, add this configuration to the RVT2:
 
 ```ini
 [ios.unback]
-unback_command: PATH_TO_BACKUPTOOL//backup_tool.py {bk_path} {extract_path}
+unback_command: PATH_TO_IOS_DATAPROTECTION/python_scripts/backup_tool.py {bk_path} {extract_path}
 ```
+
+If ios_dataprotection is used, the password will be asked during the job `ios.unback`.
+
 
 ## Jobs
 
@@ -44,6 +47,16 @@ unback_command: PATH_TO_BACKUPTOOL//backup_tool.py {bk_path} {extract_path}
 ### Job `ios.unback`
 
 Unback an iOS backup directory or zip file
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|The path to the backup directory or the zip file to unback|``|
+|`extract_path`|The output directory for the unback|`MORGUE/CASENAME/SOURCE/mnt/p01`|
+|`unzip_path`|In case of unbacking from a zip file, unzip the source to this path before unbacking|`MORGUE/CASENAME/SOURCE/unzip`|
+|`remove_unzip_path`|If set to True (default), delete the unzip directory after unzipping the backup zip file|`True`|
+|`unback_command`|External command to unback in case of encrypted backups. It is a Python string template that receives variables "bk_path" and "extract_path". For example: "python2 backup_tool.py {bk_path} {extract_path}". Check https://github.com/dinosec/iphone-dataprotection/blob/master/python_scripts/backup_tool.py|``|
 
 ### Job `ios.preforensics`
 
@@ -94,10 +107,10 @@ Parse WhatsApp database filtered by message_group
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|The path to the directory to parse|``|
-|`outfile`|Save the result to this csv file. IMPORTANT: Be careful to redirect this path to the group folder when using message_group|`MORGUE/CASENAME/SOURCE/output/ios/whatsapp/whatsapp.csv`|
 |`message_group`|Select a specific conversation to parse|``|
 |`start_date`|If set, output only messages from this date. Example format: 2018-12-25|``|
 |`end_date`|If set, output only messages until this date. Example format: 2020-01-15|``|
+|`username`|Whatsapp owner name. If not provided is taken from other WhatsApp configuration files|``|
 
 ### Job `ios.whatsapp`
 
@@ -123,10 +136,11 @@ Convert a WhatsApp conversation to an html file.
 |Parameter|Description|Default|
 |--|--|--|
 |`message_group`|Group the conversation belongs to. It is a number|`1`|
+|`input_whatsapp_csv`|CSV input file with transcripted conversation to convert, relative to message_group folder|`whatsapp.csv`|
 |`template`|Mako template file with html configuration. Relative to current working directory or RVTHOME|`templates/chat2html.mako`|
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help ios --params show_vars="" template_file="templates/help_section_complete.mako" outfile="rvt2/ios.md"`. Do not modify manually this file.
+This chapter was created automatically using `rvt2 -j help ios --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/ios.md"`. Do not modify manually this file.
 :::
 

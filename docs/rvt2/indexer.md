@@ -17,7 +17,6 @@ If you use the ElasticSearch indexer, you'll need an ElasticSearch >=6 server so
 
 ## Jobs
 
-- ``indexer.tag_and_export``: Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export` and `indexer.save` to the remote ES.
 - ``indexer.parse_file``: Parse a file and show the result in the standard output. Use for debugging.
 - ``indexer.parse_directory``: Parse a directory and show the result in the standard output. Use for debugging.
 - ``indexer.directory``: Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
@@ -27,26 +26,13 @@ If you use the ElasticSearch indexer, you'll need an ElasticSearch >=6 server so
 - ``indexer.convert_csv``: Convert a CSV file to a JSON suitable to be sent to ElasticSearch using indexer.save
 - ``indexer.query_and_tag``: Query elastic, select all related documents (containers, attachments..) and tag all of them. You must indexer.save the output
 - ``indexer.export``: Query elastic, select all documents matching a query and export them to a JSON.
+- ``indexer.tag_and_export``: Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`. You MUST run indexer.save to the remote ES_HOST on target.json
 - ``indexer.blind_searches``: Blind searches on a parsed JSON file, result from indexer.save.
 - ``indexer.index_timeline_body``: Index a BODY file provided in the path.
 - ``indexer.pst``: Parse PST files previously exported with indexer.export_pst.
 - ``indexer.export_pst``: Export contents of every pst or ost file found in a source using pffexport.
-- ``indexer.mails``: Export, parse and characterize contents of every pst or ost file found in a source
+- ``indexer.mails``: Export, parse and characterize contents of every pst or ost file found in a source. Runs export_pst, pst and characterize_mails
 - ``indexer.pst_item2eml``: Convert a message extracted from a pst to an eml file.
-
-### Job `indexer.tag_and_export`
-
-Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export` and `indexer.save` to the remote ES.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`interfile`||`original.json`|
-|`query`|The query to run. See `indexer.query_and_tag`.|`*`|
-|`tag`|The name of the tag. See `indexer.query_and_tag`.|`exported`|
-|`target`|The output wil be saved in file `target.json` and directory `target`. See `indexer.export`.|`exported`|
-|`es_export`|The URL to the remote ES server. **You MUST overwrite this param**.|`https://192.168.109.29:9200`|
 
 ### Job `indexer.parse_file`
 
@@ -81,17 +67,21 @@ Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json
 
 Save a previously indexed database in an ElasticSearch server. Alternative to `elasticdump`.
 
+You can define the location of the elasticsearch server and username/password using:
+
+`--globals indexer:es_hosts="http://localhost:9200" --globals indexer:es_username=USERNAME --globals indexer:es_password=PASSWORD`
+
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|The path to a JSON file output from indexer.directory.|``|
 |`restartable`|In True, the index can be restarted from an error. Use with care!|`False`|
-|`mapping`|Path to the file describing the mapping of fields to ElasticSearch. The mapping can only be used when the index is created.|`/home/jvera/rvt2/plugins/indexer/es-settings.json`|
+|`mapping`|Path to the file describing the mapping of fields to ElasticSearch. The mapping can only be used when the index is created.|`/home/juanvi/Incide/Projects/rvt2/plugins/indexer/es-settings.json`|
 |`name`|Index name in ElasticSearch. If index does not exists, create it.|`SOURCE`|
 |`cooloff_every`|After this number of seconds, wait cooloff_seconds.|`300`|
 |`cooloff_seconds`|Seconds to wait to cool off ElasticSearch.|`5`|
-|`es_hosts`|List of space separated ElasticSearch servers. Use format "http(s?)://HOST:PORT".|`https://elastic.incide.es:443`|
+|`tabs`|Space separated tabs to add to the rvt2-analyzer. Available tabs can be found at "/home/juanvi/Incide/Projects/rvt2/plugins/indexer/analyzer-tabs.json". Examples: files, emails, apache, iis.|``|
 
 ### Job `indexer.save_directory`
 
@@ -152,6 +142,19 @@ The target JSON file must be saved to another ElasticSearch using `indexer.save`
 |`query`|The query to run.|`*`|
 |`target`|The output wil be saved in file `target.json` and directory `target`.|`export`|
 
+### Job `indexer.tag_and_export`
+
+Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`. You MUST run indexer.save to the remote ES_HOST on target.json
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`interfile`||`original.json`|
+|`query`|The query to run. See `indexer.query_and_tag`.|`*`|
+|`tag`|The name of the tag. See `indexer.query_and_tag`.|`exported`|
+|`target`|The output wil be saved in file `target.json` and directory `target`. See `indexer.export`.|`exported`|
+
 ### Job `indexer.blind_searches`
 
 Blind searches on a parsed JSON file, result from indexer.save.
@@ -182,6 +185,7 @@ This module also calls to indexer.pst.secondary.
 
 |Parameter|Description|Default|
 |--|--|--|
+|`path`|An absolute path to pstfiles.csv, output from indexer.export_pst|``|
 |`outfile`|A JSON file with all the information in the mailboxes, ready to be imported into ElasticSearch|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.pst.json`|
 
 ### Job `indexer.export_pst`
@@ -198,7 +202,11 @@ This job depends on plugins.common and the succesful generation of alloc_files.
 
 ### Job `indexer.mails`
 
-Export, parse and characterize contents of every pst or ost file found in a source
+Export, parse and characterize contents of every pst or ost file found in a source. Runs export_pst, pst and characterize_mails
+
+All PSTs and OST files in the source are exported to MORGUE/CASENAME/SOURCE/output/mail,
+and a CSV file describing the PSTs will created there.
+The JSON with the parsed mails will be in MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.pst.json.
 
 ### Job `indexer.pst_item2eml`
 
@@ -207,6 +215,6 @@ Convert a message extracted from a pst to an eml file.
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help indexer --params show_vars="" template_file="templates/help_section_complete.mako" outfile="rvt2/indexer.md"`. Do not modify manually this file.
+This chapter was created automatically using `rvt2 -j help indexer --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/indexer.md"`. Do not modify manually this file.
 :::
 

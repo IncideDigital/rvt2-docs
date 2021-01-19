@@ -10,7 +10,7 @@ features:
   details: Enjoy the freedom and opennes (auditability) of OS projects.
 - title: Powerful
   details: Integrates the major tools used in the industry such as TheSleuthKit, RegRipper, LibPST, ElasticSearch...
-footer: GPL Licensed | Copyright © 2018-2020 INCIDE Digital Data S.L.
+footer: GPL Licensed | Copyright © 2018-2021 INCIDE Digital Data S.L.
 ---
 
 ::: warning

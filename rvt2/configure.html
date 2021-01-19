@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Configuration and running | Revealer Toolkit 2</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="An open source platform for forensics investigations">
+    
+    <link rel="preload" href="/rvt2-docs/assets/css/0.styles.67780149.css" as="style"><link rel="preload" href="/rvt2-docs/assets/js/app.f0d3868c.js" as="script"><link rel="preload" href="/rvt2-docs/assets/js/2.6da8c7cc.js" as="script"><link rel="preload" href="/rvt2-docs/assets/js/20.ae6fdca5.js" as="script"><link rel="prefetch" href="/rvt2-docs/assets/js/10.9a7271df.js"><link rel="prefetch" href="/rvt2-docs/assets/js/11.8eca3e8d.js"><link rel="prefetch" href="/rvt2-docs/assets/js/12.d39d5c45.js"><link rel="prefetch" href="/rvt2-docs/assets/js/13.0acc6cd4.js"><link rel="prefetch" href="/rvt2-docs/assets/js/14.99717bb4.js"><link rel="prefetch" href="/rvt2-docs/assets/js/15.2fdf8b62.js"><link rel="prefetch" href="/rvt2-docs/assets/js/16.7bd94a17.js"><link rel="prefetch" href="/rvt2-docs/assets/js/17.8138dc6f.js"><link rel="prefetch" href="/rvt2-docs/assets/js/18.cba47fe1.js"><link rel="prefetch" href="/rvt2-docs/assets/js/19.b638a081.js"><link rel="prefetch" href="/rvt2-docs/assets/js/21.f309469c.js"><link rel="prefetch" href="/rvt2-docs/assets/js/22.e7dc4911.js"><link rel="prefetch" href="/rvt2-docs/assets/js/23.2432cedb.js"><link rel="prefetch" href="/rvt2-docs/assets/js/24.25f1bad8.js"><link rel="prefetch" href="/rvt2-docs/assets/js/25.1327fd6f.js"><link rel="prefetch" href="/rvt2-docs/assets/js/26.5a6f2778.js"><link rel="prefetch" href="/rvt2-docs/assets/js/27.b51d4d7f.js"><link rel="prefetch" href="/rvt2-docs/assets/js/28.05a82b04.js"><link rel="prefetch" href="/rvt2-docs/assets/js/3.5c2de0b7.js"><link rel="prefetch" href="/rvt2-docs/assets/js/4.8b3754c6.js"><link rel="prefetch" href="/rvt2-docs/assets/js/5.7cdd3fab.js"><link rel="prefetch" href="/rvt2-docs/assets/js/6.2e7aec14.js"><link rel="prefetch" href="/rvt2-docs/assets/js/7.da0be5d7.js"><link rel="prefetch" href="/rvt2-docs/assets/js/8.ba8b0a5b.js"><link rel="prefetch" href="/rvt2-docs/assets/js/9.79196282.js">
+    <link rel="stylesheet" href="/rvt2-docs/assets/css/0.styles.67780149.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/rvt2-docs/" class="home-link router-link-active"><!----> <span class="site-name">Revealer Toolkit 2</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/rvt2-docs/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/rvt2-docs/rvt2/" class="nav-link router-link-active">
+  RVT2
+</a></div><div class="nav-item"><a href="/rvt2-docs/analyzer/" class="nav-link">
+  RVT2-analyzer
+</a></div><div class="nav-item"><a href="/rvt2-docs/resources/" class="nav-link">
+  Resources
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/rvt2-docs/rvt2/configure.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  en
+</a></li><li class="dropdown-item"><!----> <a href="/rvt2-docs/es/" class="nav-link">
+  es
+</a></li></ul></div></div> <a href="https://github.com/IncideDigital/rvt2-docs" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Contribute!
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/rvt2-docs/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/rvt2-docs/rvt2/" class="nav-link router-link-active">
+  RVT2
+</a></div><div class="nav-item"><a href="/rvt2-docs/analyzer/" class="nav-link">
+  RVT2-analyzer
+</a></div><div class="nav-item"><a href="/rvt2-docs/resources/" class="nav-link">
+  Resources
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/rvt2-docs/rvt2/configure.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  en
+</a></li><li class="dropdown-item"><!----> <a href="/rvt2-docs/es/" class="nav-link">
+  es
+</a></li></ul></div></div> <a href="https://github.com/IncideDigital/rvt2-docs" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Contribute!
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>RVT2</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/rvt2-docs/rvt2/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/rvt2-docs/rvt2/install.html" class="sidebar-link">Installation</a></li><li><a href="/rvt2-docs/rvt2/definitions.html" class="sidebar-link">Basic concepts</a></li><li><a href="/rvt2-docs/rvt2/configure.html" aria-current="page" class="active sidebar-link">Configuration and running</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#running-jobs" class="sidebar-link">Running jobs</a></li><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#configuration-files" class="sidebar-link">Configuration files</a></li><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#the-syntax-of-the-configuration-files" class="sidebar-link">The syntax of the configuration files</a></li><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#configuring-modules-and-jobs" class="sidebar-link">Configuring modules and jobs</a></li><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#loading-order-of-the-configuration-files" class="sidebar-link">Loading order of the configuration files</a></li><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#an-example-of-a-configuration-file" class="sidebar-link">An example of a configuration file</a></li><li class="sidebar-sub-header"><a href="/rvt2-docs/rvt2/configure.html#special-configuration-sections" class="sidebar-link">Special configuration sections</a></li></ul></li><li><a href="/rvt2-docs/rvt2/folder.html" class="sidebar-link">Folder structure</a></li><li><a href="/rvt2-docs/rvt2/base.html" class="sidebar-link">Base modules</a></li><li><a href="/rvt2-docs/rvt2/common.html" class="sidebar-link">Section common</a></li><li><a href="/rvt2-docs/rvt2/windows.html" class="sidebar-link">Section windows</a></li><li><a href="/rvt2-docs/rvt2/macos.html" class="sidebar-link">Plugin: macos</a></li><li><a href="/rvt2-docs/rvt2/linux.html" class="sidebar-link">Plugin: linux</a></li><li><a href="/rvt2-docs/rvt2/ios.html" class="sidebar-link">Section ios</a></li><li><a href="/rvt2-docs/rvt2/indexer.html" class="sidebar-link">Section indexer</a></li><li><a href="/rvt2-docs/rvt2/extend.html" class="sidebar-link">Plugin: extensions</a></li><li><a href="/rvt2-docs/rvt2/examples.html" class="sidebar-link">Examples</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>RVT2 analyzer</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Resources</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/rvt2-docs/contact.html" class="sidebar-link">Contact</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="configuration-and-running"><a href="#configuration-and-running" class="header-anchor">#</a> Configuration and running</h1> <p>Table of contents:</p> <p></p><div class="table-of-contents"><ul><li><a href="#running-jobs">Running jobs</a></li><li><a href="#configuration-files">Configuration files</a></li><li><a href="#the-syntax-of-the-configuration-files">The syntax of the configuration files</a></li><li><a href="#configuring-modules-and-jobs">Configuring modules and jobs</a></li><li><a href="#loading-order-of-the-configuration-files">Loading order of the configuration files</a></li><li><a href="#an-example-of-a-configuration-file">An example of a configuration file</a></li><li><a href="#special-configuration-sections">Special configuration sections</a><ul><li><a href="#default-section">DEFAULT section</a></li><li><a href="#rvt2-section-and-plugins">rvt2 section and plugins</a></li><li><a href="#main-section">Main section</a></li></ul></li></ul></div><p></p> <h2 id="running-jobs"><a href="#running-jobs" class="header-anchor">#</a> Running jobs</h2> <p>Most of the time, you are going to run one of the predefined jobs with the default configuration. For example, to index the content of a disk in ElasticSearch, run:</p> <div class="language-sh extra-class"><pre class="language-sh"><code>rvt2 <span class="token punctuation">\</span>
+    --casename <span class="token number">112233</span> --source 01 <span class="token punctuation">\</span>
+    -j indexer.save_directory <span class="token punctuation">\</span>
+    --params <span class="token assign-left variable">option1</span><span class="token operator">=</span><span class="token number">1</span> option2 -- <span class="token punctuation">\</span>
+    path_to_a_directory
+</code></pre></div><p>There are dozens of predefined jobs with a default configuration you won't need to change.
+Check the <a href="/rvt2-docs/rvt2/examples.html">examples section</a> for some examples.
+You can get the list of predefined by running the job <code>show_jobs</code>, which is also the default job:</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token operator">&gt;</span> rvt2
+
+<span class="token comment"># Available jobs</span>
+
+- show_jobs: Show available jobs.
+- mount: Mount all partitions of a disk image
+- umount: Unmount all partitions of a disk image
+<span class="token punctuation">(</span><span class="token punctuation">..</span>.<span class="token punctuation">)</span>
+</code></pre></div><h2 id="configuration-files"><a href="#configuration-files" class="header-anchor">#</a> Configuration files</h2> <p>Sometimes, you would want to run a customized job. In these cases, you must write a configuration file and load it.
+If there is a file named <code>rvt2.cfg</code> in the current directory, the system will load it automatically:</p> <div class="language- extra-class"><pre class="language-text"><code>rvt2 [OPTIONAL_PATH]
+</code></pre></div><p>Alternatively, you can create a <code>numcase.cfg</code> with information about the job and then:</p> <div class="language- extra-class"><pre class="language-text"><code>rvt2 --config numcase.cfg [OPTIONAL_PATH]
+</code></pre></div><p>The default jobs, modules and configuration is read from the system configuration files.
+These files are included in the directory <code>$RVTHOME/conf</code>. If you are a user of the RVT2,
+you SHOULDN'T modify these files. Your system administrator can modify the file <code>$RVTHOME/conf/local.cfg</code>.
+If your case needs a specific configuration, use your own configuration file and load it with the <em>--config</em> parameter.</p> <h2 id="the-syntax-of-the-configuration-files"><a href="#the-syntax-of-the-configuration-files" class="header-anchor">#</a> The syntax of the configuration files</h2> <p>The configuration system uses the standard Python package <a href="https://docs.python.org/3/library/configparser.html" target="_blank" rel="noopener noreferrer"><code>configparser</code><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>, in which configuration files are standard <em>ini</em> files with a slightly modified <code>configparser.ExtendedInterpolation</code> to allow one section to inherits all options from another section.</p> <p>These are some examples:</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[DEFAULT]</span>
+<span class="token comment">; this is the default value for name, and it is automatically included in all sections</span>
+name: Johny
+
+<span class="token selector">[Job1]</span>
+<span class="token comment">; the configuration system uses the ExtendedInterpolation syntax for the options.</span>
+<span class="token comment">; In this case, greetings=&quot;Hello, Terry&quot;</span>
+greetings: Hello, ${name}
+name: Terry
+
+<span class="token selector">[Job2]</span>
+<span class="token comment">; if name is not defined, the value in the DEFAULT section is used.</span>
+<span class="token comment">; In this case, greetings=&quot;Hello, Johny&quot;</span>
+greetings: Hello, ${name}
+
+<span class="token selector">[Job3]</span>
+<span class="token comment">; you can use options from another sections with the ${SECTION:OPTION} syntax</span>
+<span class="token comment">; In this case, greetings=&quot;Bye, Terry!&quot;</span>
+greetings: Bye, ${Job1:name}!
+
+<span class="token selector">[Job4]</span>
+<span class="token comment">; &quot;inherits&quot; copies in this section all options from another section</span>
+<span class="token comment">; except if they are already defined.</span>
+<span class="token comment">; In this case, greetings (inherited, not explicitely defined)=&quot;Hello, Tim&quot;</span>
+inherits: Job1
+name: Tim
+</code></pre></div><div class="custom-block warning"><p class="custom-block-title">WARNING</p> <p>The <code>inherits</code> option was useful in the early versions of the RVT2. Currently, the configuration system uses <code>configparser.ExtendedInterpolation</code> and passing options through the command line, and the support to the <code>inherits</code> option might be deprecated in the future. The use of the <code>inherits</code> option is discouraged for new modules and jobs.</p></div> <h2 id="configuring-modules-and-jobs"><a href="#configuring-modules-and-jobs" class="header-anchor">#</a> Configuring modules and jobs</h2> <p>From the <a href="/rvt2-docs/rvt2/definitions.html">Basic concepts</a> chapter, we learnt that the RVT2 uses modules (classes extending <code>base.job.ModuleBase</code>), single jobs (a chain of modules) and composite jobs (a queue of single or composite jobs).</p> <p>The section describing a <strong>module</strong> has a <code>module</code> option with the name of the class to load. Modules are free to use any number of options. The options available to a module are described in the <a href="https://portal.incide.es/rvt2-dev" target="_blank" rel="noopener noreferrer">Developers manual<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>.</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[base.input.CSVReader]</span>
+<span class="token comment">; The module option tells the class to load.</span>
+<span class="token comment">; If a module option is not provided, the RVT2 will try to</span>
+<span class="token comment">; load the name of the section as a class name</span>
+module: base.input.CSVReader
+<span class="token comment">; any additional configuration you might need</span>
+outfile: outfile.csv
+delimiter: ;
+</code></pre></div><p>The section describing a <strong>single job</strong> has a <code>modules</code> option with the chain of modules to run, one module per line. You can set the value for any option in this line and it will overwrite the option defined in the module configuration section.</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[MyJob]</span>
+<span class="token comment">; (optional) A help message for your job</span>
+description: Write here a help message
+<span class="token comment">; (optional) Help messages are organized in sections (base, indexer, windows...)</span>
+<span class="token comment">; Tell here the name of the section for this job</span>
+help_section: mysection
+<span class="token comment">; the module chain. You can pass options to overwrite the default configuration of the module.</span>
+modules:
+    base.output.JSONSink outfile<span class="token attr-value"><span class="token punctuation">=</span>CONSOLE</span>
+    base.input.CSVReader delimiter<span class="token attr-value"><span class="token punctuation">=</span>{delimiter}</span>
+<span class="token comment">; the path for the job, if not provided from the command line</span>
+path: myfile.csv
+<span class="token comment">; Params configurable from the command line. See below</span>
+default_params: {'delimiter':'${base.input.CSVReader:delimiter}'}
+</code></pre></div><p>Actually, the <code>modules</code> option is managed as a <a href="https://docs.python.org/3/library/string.html#custom-string-formatting" target="_blank" rel="noopener noreferrer">format string<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> where <code>kwargs</code> is the <code>default_params</code> option. In the example above, note the the <code>delimiter</code> option inside <code>modules</code> is referred as <em>{delimiter}</em>, without the leading '$': it is not interpolated by <code>configparser</code> but like this: <code>modules = config.get('modules').format(**default_params)</code>.</p> <p>You can overwrite the default params object when the job is run:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>rvt2 -j MyJob --params <span class="token assign-left variable">delimiter</span><span class="token operator">=</span><span class="token string">&quot;,&quot;</span> -- myfile.csv
+</code></pre></div><p>Using the command line (or any other way that uses the function <code>run_job()</code>, as modules in package <code>base.threads</code> do), you can not configure all parameters in a job section but only the parameters included in the <em>default_params</em> dictionary.</p> <div class="custom-block warning"><p class="custom-block-title">WARNING</p> <p>The <em>default_params</em> is used only by single or composite jobs, not modules. The job might want to send the custom param only to a few selected modules and not all of them. Think about this example:</p> <div class="language- extra-class"><pre class="language-text"><code>[MyJob]ini
+modules:
+    module1 option1=1 option2={option2}
+    module1 option1={option1} option2=2
+default_params: {'option1':'3','option2':'4'}
+</code></pre></div><p>Can be run as:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>rvt2 -j MyJob --params <span class="token assign-left variable">option1</span><span class="token operator">=</span><span class="token number">5</span> <span class="token assign-left variable">option2</span><span class="token operator">=</span><span class="token number">6</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>Sometimes, it might be useful to have a module that is also a single job configurable from the command line. In this case, define a <code>module</code> option as well as <code>modules</code> and set the <em>default_params</em> option using own interpolation:</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[mypackage.myclass]</span>
+module: mypackage.myclass
+someparam: 1
+modules:
+    base.output.CSVSink outfile<span class="token attr-value"><span class="token punctuation">=</span>&quot;{outfile}&quot;</span>
+    mypackage.myclass someparam<span class="token attr-value"><span class="token punctuation">=</span>{someparam}</span>
+default_params: {'outfile':'outfile.csv','someparam':'${someparam}'}
+</code></pre></div></div> <p>The section describing a <strong>composite job</strong> has a <code>jobs</code> option. The configuration is similar to a single job but with <code>jobs</code> instead of <code>modules</code>. Note you can also overwrite the <code>path</code> option of the single jobs, if needed.</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[MyCompositeJob]</span>
+description: Write here a help message
+help_section: mysection
+jobs:
+    MyJob path<span class="token attr-value"><span class="token punctuation">=</span>&quot;${path}&quot; delimiter={delimiter}</span>
+    help
+path: myfile.csv
+default_params: {'delimiter':';'}
+</code></pre></div><h2 id="loading-order-of-the-configuration-files"><a href="#loading-order-of-the-configuration-files" class="header-anchor">#</a> Loading order of the configuration files</h2> <p>All configuration files are loaded to create a common configuration object. The order in which the configuration files matters: if two different options for the same section are defined in two configuration files, the one read the last will overwrite the value of the first configuration file.</p> <p>The RVT2 reads the configuration from these files and in this order. Every file is able to overwrite the configuration of the previous files.</p> <ol><li><code>$RVTHOME/conf/*.cfg</code>: default configuration for the core jobs and modules. These files must be modified only by the package manager. In order to help us organizing the configuration files, jobs are defined in files names <code>jobs.cfg</code> and modules in files named <code>modules.cfg</code>.</li> <li><code>$PLUGIN/*.cfg</code>: if a plugin is defined (see below), configuration for the jobs and modules provided by <em>PLUGIN</em>. This file must be modified only by the <em>PLUGIN</em> developer. Plugins are encouraged to follow the same organization than the conf directory: the jobs provided by the plugin are defined in a file named <code>jobs.cfg</code> and modules in a file named <code>modules.cfg</code>.</li> <li><code>$RVTHOME/conf/local.cfg</code>: any configuration valid only for the current computer. For example, the ElasticSearch server or the location of the log files. This file is optional, overwrites the previous files and should not be under version control.  This file must be modified only by the system administrator.</li> <li><code>$(pwd)/rvt2.cfg</code>: any configuration specific for the current execution. This file is optional. This file can be created by case analysts.</li> <li>Any other files passed with the <code>--config</code> parameter. This parameter can be used multiple times. These files can be created by case analysts.</li></ol> <h2 id="an-example-of-a-configuration-file"><a href="#an-example-of-a-configuration-file" class="header-anchor">#</a> An example of a configuration file</h2> <p>In the configuration system, sections configure jobs and modules. Some special sections are used to configure the RVT2 (such as the <code>[logging]</code> or the <code>[rvt2]</code> sections) and other sections might be values shared by other sections. The special <code>[DEFAULT]</code> section defines the options shared by all the other sections.</p> <p>This is an example of a configuration file:</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[DEFAULT]</span>
+source: 112233-01-1
+casename: 112233-case
+morgue: /morgue
+rvthome: /usr/local/lib/rvt2
+
+<span class="token selector">[logging]</span>
+logfile: ${rvthome}/rvt2.log
+
+<span class="token selector">[rvt2]</span>
+plugins:
+    ${rvthome}/plugins/indexer
+
+<span class="token selector">[Main]</span>
+jobs:
+   indexer.save_directory
+path: ${sourcedir}/mnt/p01
+
+<span class="token selector">[OtherJob]</span>
+jobs: ${Main:jobs}
+path: ${sourcedir}/mnt/p02
+</code></pre></div><p>(This configuration file is equivalent to the default configuration of the job: <code>rvt --casename 112233-case --source 112233-01-1 -j indexer.save_directory</code>)</p> <p>This configuration defines two composite jobs: <code>Main</code> and <code>OtherJob</code>. Any of these composite jobs  will run a job named <code>indexer.save_directory</code>, which indexes the contents of the directory <code>/morgue/112233-case/112233-01-1/mnt/p0x</code>.</p> <p>You probably notice there are some options such as <code>sourcedir</code> and some jobs such as <code>indexer.directory_save</code> that are not declared in this configuration files. These are the default options, as defined in a configuration file inside <code>$RVTHOME/conf</code> or <code>$RVTHOME/plugins/indexer</code>. Many of these options are not global, but specific to the modules that need them. If you want to change any of these options you must override the default values provided by the specific module.</p> <p>The next example explicitly configures all these options, including the specific chain of modules to run instead of using a predefined job.</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[DEFAULT]</span>
+source: 112233-01-1
+casename: 112233-case
+morgue: /media/morgue
+stop_on_error: false
+
+<span class="token selector">[Main]</span>
+jobs:
+    parse_directory
+    index_output
+path: ${sourcedir}
+
+<span class="token selector">[parse_directory]</span>
+description: Parse the contents of a source
+path: ${sourcedir}/mnt/p01
+modules:
+    base.output.JSONSink outfile<span class="token attr-value"><span class="token punctuation">=</span>'${outputdir}/indexer/${source}.json'</span>
+    indexer.elastic.ElasticSearchAdapter
+    indexer.directory.DirectoryFilter
+    indexer.tikarpaser.TikaParser
+
+<span class="token selector">[index_output]</span>
+description: Index a previously parsed source
+modules:
+    indexer.elastic.ElasticSearchHelper
+path: ${outputdir}/indexer/${source}.json
+
+<span class="token selector">[indexer.elastic.ElasticSearchHelper]</span>
+es_hosts: http://localhost:9200
+create_index: True
+
+<span class="token selector">[indexer.tikaparser.TikaParser]</span>
+tika_server: http://localhost:9998
+</code></pre></div><p>(This configuration file is roughly equivalent to the predefined job <em>indexer.save_directory</em>. You can just run the predefined job instead)</p> <p>The rest of this document explores the configuration files in depth.</p> <h2 id="special-configuration-sections"><a href="#special-configuration-sections" class="header-anchor">#</a> Special configuration sections</h2> <p>There are some special configuration sections:</p> <ul><li><code>DEFAULT</code> holds default values for all other sections, when necessary.</li> <li><code>rvt2</code>, to configure the rvt2 and its plugins.</li> <li><code>logging</code>, section to configure the logging system.</li> <li><code>Main</code>, the job to run, if no job is defined in the command line.</li></ul> <h3 id="default-section"><a href="#default-section" class="header-anchor">#</a> DEFAULT section</h3> <p>Configure in this section at least these values:</p> <ul><li><em>casename</em>: The name of the case. In this documentation, we assume the case name has the format <em>IDENTIFIER-CODENAME</em>. For example, <em>12345-mycase</em>. Anyway, the RVT won't impose a format for the case names.</li> <li><em>source</em>: The name of a source of information inside a case, such as disk images or zip files. In this documentation, we assume the source has the format <em>IDENTIFIER-NUMBER</em>, where <em>IDENTIFIER</em> is the same identifier than the case name. Anyway, the RVT2 won't impose a format to the source names.</li> <li><em>morgue</em>: The directory where images, outputs and case files are stored. Check <a href="/rvt2-docs/rvt2/folder.html">an example of organization for the morgue directory</a>.
+All the paths are meant to be configurable, but we STRONGLY recommend to follow the same organization for all cases.</li></ul> <p>The morgue is usually configured in the <code>RVTHOME/conf/local.cfg</code> file, but you might prefer to have several morgues to run tests.
+These three values are so important that you can also set them from the command line when running the RVT.</p> <div class="language- extra-class"><pre class="language-text"><code>rvt2 --casename 12345-mycase --source 12345-01 --morgue /morgue -j index_and_save_directory
+</code></pre></div><p>If you check the system configuration files, you'll notice there are other options created from these values. For example:</p> <ul><li><em>casedir</em>: the main directory for the output files. We recommend to have your notes and reports in this same directory.</li> <li><em>imagesdir</em>: the directory where the disk images are saved. If you are seriously into DFIR,
+this directory should be read only, in a RAID volume and backed-up externally in a safe place.</li> <li><em>sourcedir</em>: the directory where the source is going to be mounted and the output of the several jobs is going to be saved. For example:
+<ul><li>By default, a disk image is expected to be mounted in <code>$sourcedir/mnt/p01/indexer/source.json</code>.</li> <li>By default, the indexer save files in <code>$sourcedir/output/indexer/source.json</code></li></ul></li> <li><em>outputdir</em>: the directory where the output files are going to be writen.</li></ul> <p>See chapter <a href="/rvt2-docs/rvt2/folder.html">Folder structure</a> for a deeper explanation of this directories.</p> <p>If you are not satisfied with the default configuration of these values, change them in <code>RVTHOME/conf/local.cfg</code>.</p> <h3 id="rvt2-section-and-plugins"><a href="#rvt2-section-and-plugins" class="header-anchor">#</a> rvt2 section and plugins</h3> <p>Plugins are modules and jobs specific for a task. For example, modules to read the Windows registry, or modules to parse files using Apache Tika and index the result in a ElasticSearch server.</p> <p>These plugins reside in their own directory. You must declare them in the <code>plugins</code> option of the <code>[rvt2]</code> section. The source tree of the RVT2 provide some plugins, and you can write your own plugins for the RVT2 and save them in a completely different path in your computer.</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token selector">[rvt2]</span>
+plugins:
+    ${rvthome}/plugins/indexer
+    ${rvthome}/plugins/ios
+    /some/other/path/yourplugin
+pythonpath:
+    ${cwd}
+</code></pre></div><p>Note you can load any additional python path you might need in the option <code>rvt2:pythonpath</code>. By default, the current directory is added to the python path. Also, the plugin might define its own additional pythonpath in this way:</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment">; in the jobs.cfg inside the &quot;yourplugin&quot; directory</span>
+
+<span class="token selector">[yourplugin]</span>
+pythonpath:
+    ${userhome}/.local/lib/python3.7/site-packages
+<span class="token comment">; this option will be set automatically when the plugin loads, in case you must refer to the pluin directory</span>
+plugindir:
+</code></pre></div><p>The default plugins are designed to be loaded always, even if their jobs are not used. This fact isn't going to make the initial run of the RVT2 any slower. In any case, you can decide to not load the plugins you don't need. Be aware one plugin might depend on the modules of other plugin: read the plugin documentation for the additional details.</p> <h3 id="main-section"><a href="#main-section" class="header-anchor">#</a> Main section</h3> <p>The <code>Main</code> section is the entry point to the system. It defines either:</p> <ul><li>The list of jobs to run (if the section includes the option <code>jobs</code>)</li> <li>The description of a single job (if the section includes the option <code>modules</code>)</li> <li>The description of a single module (if the section include the option <code>module</code>)</li></ul> <p>By default, the <code>Main</code> section shows the avaible jobs in the system.</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/IncideDigital/rvt2-docs/edit/master/rvt2/configure.md" target="_blank" rel="noopener noreferrer">Help us to improve this page!</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">1/19/2021, 3:06:21 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/rvt2-docs/rvt2/definitions.html" class="prev">
+        Basic concepts
+      </a></span> <span class="next"><a href="/rvt2-docs/rvt2/folder.html">
+        Folder structure
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/rvt2-docs/assets/js/app.f0d3868c.js" defer></script><script src="/rvt2-docs/assets/js/2.6da8c7cc.js" defer></script><script src="/rvt2-docs/assets/js/20.ae6fdca5.js" defer></script>
+  </body>
+</html>

@@ -6,64 +6,40 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 ## Jobs
 
 - ``windows.preforensics``: Main set of forensic analysis jobs to run on a Windows disk partition.
-- ``windows.IR_preforensics``: Main set of forensic analysis jobs to run on Windows artifacts. It assumes artifact files are located under `MORGUE/CASENAME/SOURCE/mnt`
-- ``windows.characterize``: Describes basic information about disk and Windows partitions.
-- ``windows.recentfiles``: Parse lnk and jumplist files in a directory
+- ``windows.characterize``: Describes basic information about Windows partitions and users.
+- ``windows.recentfiles``: Parse lnk and jumplist files in a directory.
 - ``windows.recentfiles_report``: Generates a summary file with all recent files sources.
-- ``windows.recentfiles_default``: Parse lnk and jumplist files from a Windows image. Generates a summary file with all recent files sources.
-- ``windows.exec``: Extract and parse Windows artifacts related with applications execution (Prefetch, RFC).
+- ``windows.recentfiles_default``: Parse all lnk and jumplist files present in a mounted source. Generates a summary file with all recent files sources.
+- ``windows.execution``: Extract and parse Windows artifacts related with applications execution (Prefetch, RFC).
 - ``windows.prefetch``: Extract and parse Windows artifacts related with applications execution (Prefetch)
 - ``windows.rfc``: Extract and parse Windows artifacts related with applications execution (RFC)
-- ``windows.exec.CCM``: Extracts CCM info to get more information about executions
+- ``windows.CCM``: Extracts SCCM Software Metering history to get more information about executions
 - ``windows.autorip``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
-- ``windows.autorip_default``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
-- ``windows.registry``: Dumps Windows Registry hives. Used for indexing.
-- ``windows.hives``: Parse extra registry hives, such as AmCache, ShimCache, ScheduledTasks or ScheduledTasks
+- ``windows.registry_hives``: Extracts an extensive set of keys from Windows Registry hives using regripper. Results are organized according to its information type.
+- ``windows.amcache``: Parse AmCache hive
+- ``windows.shimcache``: Parse ShimCache hive
+- ``windows.syscache``: Parse SysCache hive
+- ``windows.appcompatcache``: Parse AppcompatCache from SYSTEM registry hive
+- ``windows.userassist``: Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Windows environment is needed to execute it.
+- ``windows.userassist_report``: Generates a summary file with all userassist files sources.
+- ``windows.shellbags``: Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe to parse. Windows environment is needed to execute it.
+- ``windows.shellbags_report``: Generates a summary file with all shellbags files sources.
+- ``windows.registry``: Dumps Windows Registry hives. Used for indexing purposes.
+- ``windows.events``: Parse Windows event files to get relevant logs events.
+- ``windows.eventartifacts``: Extracts Windows artifacts from event files. It is required to execute `windows.events` before this job
+- ``windows.scheduled_tasks_all``: Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
+- ``windows.scheduled_tasks``: Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 - ``windows.recycle``: Parse files in (or deleted from) Windows Recycle Bin
 - ``windows.srum``: Extract and parse SRUM (System Resource Utilization Monitor) from a windows OS
 - ``windows.usb``: Extracts USB drives data about drivers installation from setupapi.dev.log
+- ``windows.usnjrnl_all``: Parse all NTFS UsnJrnl files found in an image.
 - ``windows.usnjrnl``: Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
 - ``windows.hiberfil``: Decompress hiberfil.sys and extract some artifacts
 - ``windows.bits``: Parse Background Intelligent Transfer Service (BITS). This is a service to transfer binaries between systems, used mainly by Microsoft Update and similar programs.
-- ``windows.activity_cache``: Parse ActivitiesCache database
+- ``windows.activity_cache``: Parse ActivitiesCache database.
 - ``windows.i30``: Parse I30 files to obtain a timeline
-- ``windows.events``: Parse Windows event files to get relevant logs events.
-- ``windows.events.OAlerts``: Parse Windows Securty event file to get relevant logs events
-- ``windows.events.Security``: Parse Windows Securty event file to get relevant logs events
-- ``windows.events.System``: Parse Windows System event file to get relevant logs events
-- ``windows.events.RDPRemote``: Parse Windows System event file to get relevant logs events
-- ``windows.events.RDPLocal``: Parse Windows System event file to get relevant logs events
-- ``windows.events.RDPClient``: Parse Windows System event file to get relevant logs events
-- ``windows.events.RDPCoreTS``: Parse Windows System event file to get relevant logs events
-- ``windows.events.Scheduled``: Parse Windows event files to get relevant scheduled tasks logs events
-- ``windows.events.Bits``: Parse Windows event files to get relevant scheduled tasks logs events
-- ``windows.events.Network``: Parse Windows event files to get relevant networking logs events
-- ``windows.events.USB``: Parse Windows event files to get relevant usb logs events
-- ``windows.events.UserProfile``: Parse Windows UserProfile event file to get relevant logs events
-- ``windows.events.Run``: Parse Windows Microsoft-Windows-Shell-Core%4Operational event file to get relevant logs events
-- ``windows.events.PartitionDiagnostic``: Parse Windows Microsoft-Windows-Partition%4Diagnostic event file to get relevant logs events
-- ``windows.events.KernelPnp``: Parse Windows Microsoft-Windows-Kernel-PnP%4Configuration event file to get relevant logs events
-- ``windows.events.NtfsOperational``: Parse Windows Microsoft-Windows-Ntfs%4Operational event file to get relevant logs events
-- ``windows.events.StorageClassPnp``: Parse Windows Microsoft-Windows-Storage-ClassPnP%4Operational event file to get relevant logs events
-- ``windows.events.DeviceSetupManagerAdmin``: Parse Windows Microsoft-Windows-Micrsoft-Windows-DeviceSetupManager%4Admin event file to get relevant logs events
-- ``windows.events.DeviceSetupManagerOperational``: Parse Windows Microsoft-Windows-Micrsoft-Windows-DeviceSetupManager%4Operational event file to get relevant logs events
-- ``windows.eventsartifacts``: Extracts windows artifacts from event files. Job 'windows.events' must be executed first
-- ``windows.eventartifacts.logon_rdp``: Extract login and rdp artifacts
-- ``windows.eventartifacts.logon_rdp2``: Extract login and rdp artifacts
-- ``windows.eventartifacts.logon_rdp_out``: Extract login and rdp artifacts
-- ``windows.eventartifacts.poweron``: Extract poweron poweroff artifacts
-- ``windows.eventartifacts.network``: Extract shared object events
-- ``windows.eventartifacts.shares``: Extract shared object events
-- ``windows.eventartifacts.winupdate``: Extract install related events of processes and services
-- ``windows.eventartifacts.scheduled_tasks``: Extract install related events of processes and services
-- ``windows.eventartifacts.install``: Extract install related events of processes and services
-- ``windows.eventartifacts.UserProfile``: Extract autorun related events
-- ``windows.eventartifacts.run``: Extract autorun related events
-- ``windows.eventartifacts.BITS``: Extract BITS events
-- ``windows.eventartifacts.USB_plug``: Extract USB events
-- ``windows.eventartifacts.USB_connections``: Extract USB events 2
-- ``windows.eventartifacts.USB_install``: Extract USB events
 - ``windows.source_summary``: Tables summary of previously parsed artefacts
+- ``windows.IR_preforensics``: Main set of forensic analysis jobs to run on Windows artifacts. It assumes artifact files are located under `MORGUE/CASENAME/SOURCE/mnt`
 
 ### Job `windows.preforensics`
 
@@ -72,7 +48,7 @@ Main set of forensic analysis jobs to run on a Windows disk partition.
 Artifacts parsed:
 
 - MFT Timeline
-- Characterize: `MORGUE/CASENAME/SOURCE/analysis/characterize.md`
+- Characterize: `MORGUE/CASENAME/SOURCE/analysis/disk_summary.md`, `MORGUE/CASENAME/SOURCE/analysis/os_summary.md`
 - Registry (using Regripper): `MORGUE/CASENAME/SOURCE/output/windows/hives`
 - Event Logs:
 - `MORGUE/CASENAME/SOURCE/output/windows/events`
@@ -86,32 +62,8 @@ Artifacts parsed:
 - Recycle Bin: `MORGUE/CASENAME/SOURCE/output/windows/recyclebin`
 - RFC: `MORGUE/CASENAME/SOURCE/output/windows/execution`
 - Activities Cache: `MORGUE/CASENAME/SOURCE/output/windows/execution`
-- USB artifacts'MORGUE/CASENAME/SOURCE/output/windows/usb`
+- USB artifacts: `MORGUE/CASENAME/SOURCE/output/windows/usb`
 - BAM: `MORGUE/CASENAME/SOURCE/output/windows/execution`
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
-|`timeline_outdir`||`MORGUE/CASENAME/SOURCE/output/timeline`|
-
-### Job `windows.IR_preforensics`
-
-Main set of forensic analysis jobs to run on Windows artifacts. It assumes artifact files are located under `MORGUE/CASENAME/SOURCE/mnt`
-
-Artifacts parsed:
-
-- MFT Timeline
-- Registry (using Regripper): `MORGUE/CASENAME/SOURCE/output/windows/hives`
-- Event Logs:
-- `MORGUE/CASENAME/SOURCE/output/windows/events`
-- `MORGUE/CASENAME/SOURCE/analysis/events`
-- Lnk and Jumplists:
-- `MORGUE/CASENAME/SOURCE/output/windows/recentfiles`
-- `MORGUE/CASENAME/SOURCE/analysis/recentfiles`
-- Prefetch: `MORGUE/CASENAME/SOURCE/output/windows/execution`
-- Browser History: `MORGUE/CASENAME/SOURCE/output/browsers`
 
 #### Configurable parameters
 
@@ -122,10 +74,8 @@ Artifacts parsed:
 
 ### Job `windows.characterize`
 
-Describes basic information about disk and Windows partitions.
+Describes basic information about Windows partitions and users.
 Information includes:
-- Partition Table
-- Disk model and serial number (if cloning log provided)
 - OS name, version, ID and owner
 - OS Installation (or update) date
 - Creation and last login/logoff dates for every user present
@@ -134,13 +84,15 @@ Information includes:
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`|path to file were results are stored (in markdown format)|`MORGUE/CASENAME/SOURCE/analysis/characterize.md`|
-|`template_file`|mako template to display results|`templates/disk.mako`|
+|`outfile`|path to file were results are stored (in markdown format)|`MORGUE/CASENAME/SOURCE/analysis/os_summary.md`|
+|`aux_file`|json file where OS info will be stored and used by other jobs|`MORGUE/CASENAME/SOURCE/output/auxdir/os_info.json`|
+|`template_file`|mako template to display results|`templates/os_summary.mako`|
 |`file_exists`||`OVERWRITE`|
 
 ### Job `windows.recentfiles`
 
-Parse lnk and jumplist files in a directory
+Parse lnk and jumplist files in a directory.
+It is recommended to run `windows.recentfiles_report` after parsing all possible recentfiles with the present job
 
 #### Configurable parameters
 
@@ -148,10 +100,9 @@ Parse lnk and jumplist files in a directory
 |--|--|--|
 |`path`|absolute path to folder containing lnk|automaticdestestination|customdestination files|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
-|`outdir_analysis`|path to directory where generated analysis files will be stored|`MORGUE/CASENAME/SOURCE/analysis/recentfiles`|
-|`appid`|path to file relating applications id with names|`/home/juanvi/Incide/Projects/rvt2/plugins/windows/appID.txt`|
-|`volume_id`||``|
-|`username`||``|
+|`appid`|path to file relating applications id with names|`/home/jvera/Incide/Projects/rvt2/plugins/windows/appID.txt`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+|`username`|User name identifier|``|
 
 ### Job `windows.recentfiles_report`
 
@@ -166,7 +117,7 @@ Generates a summary file with all recent files sources.
 
 ### Job `windows.recentfiles_default`
 
-Parse lnk and jumplist files from a Windows image. Generates a summary file with all recent files sources.
+Parse all lnk and jumplist files present in a mounted source. Generates a summary file with all recent files sources.
 
 #### Configurable parameters
 
@@ -175,9 +126,9 @@ Parse lnk and jumplist files from a Windows image. Generates a summary file with
 |`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
 |`outdir_analysis`|path to directory where generated analysis files will be stored|`MORGUE/CASENAME/SOURCE/analysis/recentfiles`|
-|`appid`|path to file relating applications id with names|`/home/juanvi/Incide/Projects/rvt2/plugins/windows/appID.txt`|
+|`appid`|path to file relating applications id with names|`/home/jvera/Incide/Projects/rvt2/plugins/windows/appID.txt`|
 
-### Job `windows.exec`
+### Job `windows.execution`
 
 Extract and parse Windows artifacts related with applications execution (Prefetch, RFC).
 
@@ -188,7 +139,6 @@ Extract and parse Windows artifacts related with applications execution (Prefetc
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
@@ -212,26 +162,28 @@ Extract and parse Windows artifacts related with applications execution (RFC)
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|path to directory containing pf files|``|
+|`path`|path to RecentFileCache.bcf file |``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
-### Job `windows.exec.CCM`
+### Job `windows.CCM`
 
-Extracts CCM info to get more information about executions
+Extracts SCCM Software Metering history to get more information about executions
 The path is the absolute location of Windows/System32/wbem/Repository folder.
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/execution/CCM.json`|
-|`outfile2`||`MORGUE/CASENAME/SOURCE/output/windows/execution/CCM.csv`|
+|`path`|absolute path Windows/System32/wbem/Repository directory|``|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
 ### Job `windows.autorip`
 
 Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
-
-The list of regripper modules, its description and output file can be found at: `/home/juanvi/Incide/Projects/rvt2/plugins/windows/autorip.json`
+Expects a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
+The list of regripper modules, its description and output file can be found at: `/home/jvera/Incide/Projects/rvt2/plugins/windows/autorip.json`
 
 Some of the airtifacts are:
 
@@ -247,14 +199,14 @@ The existence of a Shellbag sub-key for a given directory indicates that the spe
 |Parameter|Description|Default|
 |--|--|--|
 |`vss`|process Volume Shadow Snapshot|`False`|
-|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/juanvi/Incide/Projects/rvt2/plugins/windows/autorip.json`|
-|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/juanvi/Incide/Projects/rvt2/plugins/windows/regripper_plugins.json`|
+|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/jvera/Incide/Projects/rvt2/plugins/windows/autorip.json`|
+|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/jvera/Incide/Projects/rvt2/plugins/windows/regripper_plugins.json`|
 |`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 
-### Job `windows.autorip_default`
+### Job `windows.registry_hives`
 
-Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
+Extracts an extensive set of keys from Windows Registry hives using regripper. Results are organized according to its information type.
 
 This job takes the default configuration of mounted devices as base to locate hive files to parse
 
@@ -263,16 +215,125 @@ This job takes the default configuration of mounted devices as base to locate hi
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|absolute path to folder containing hives|``|
-|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/juanvi/Incide/Projects/rvt2/plugins/windows/autorip.json`|
-|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/juanvi/Incide/Projects/rvt2/plugins/windows/regripper_plugins.json`|
+|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/jvera/Incide/Projects/rvt2/plugins/windows/autorip.json`|
+|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/jvera/Incide/Projects/rvt2/plugins/windows/regripper_plugins.json`|
 |`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`casedir`||`MORGUE/CASENAME`|
 
+### Job `windows.amcache`
+
+Parse AmCache hive
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+|`vss`|process Volume Shadow Snapshot|`False`|
+
+### Job `windows.shimcache`
+
+Parse ShimCache hive
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+|`vss`|process Volume Shadow Snapshot|`False`|
+
+### Job `windows.syscache`
+
+Parse SysCache hive
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+|`vss`|process Volume Shadow Snapshot|`False`|
+
+### Job `windows.appcompatcache`
+
+Parse AppcompatCache from SYSTEM registry hive
+Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcache
+
+- Regripper ppcompat plugin. Recommended configuration:
+- `cmd`: ``
+- AppCompatCacheParser.exe. Recommended configuration:
+- `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --csv {outdir} --csvf {filename} --nl`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/execution`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+|`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
+|`executable`|path to the tool used to parse appcompatcache|`/home/jvera/Incide/Projects/rvt2/external_tools/windows/AppCompatCacheParser.exe`|
+|`vss`|process Volume Shadow Snapshot|`False`|
+
+### Job `windows.userassist`
+
+Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Windows environment is needed to execute it.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
+|`cmd`|External command to parse userassist. It is a Python string template accepting variables "executable", "hive", "outdir", "filename" and "batch_file". Variables "hive" and "filename" are automatically set by the job. The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} --bn {batch_file} -f {hive} --csv {outdir} --csvf {filename} --nl`|
+|`executable`|path to the tool used to parse userassist|`/home/jvera/Incide/Projects/rvt2/external_tools/windows/RegistryExplorer/RECmd.exe`|
+|`batch_file`|configuration file for userassist using RECmd.exe|`/home/jvera/Incide/Projects/rvt2/external_tools/windows/RegistryExplorer/BatchExamples/BatchExampleUserAssist.reb`|
+
+### Job `windows.userassist_report`
+
+Generates a summary file with all userassist files sources.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/hives/userassist.csv`|
+|`path`||`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+
+### Job `windows.shellbags`
+
+Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe to parse. Windows environment is needed to execute it.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
+|`cmd`|External command to parse shellbags. It is a Python string template accepting variables "executable", "hives_dir" and "outdir". Variable "hives_dir" is deduced by the job from "path". The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} -d {hives_dir} --csv {outdir} --nl --dedupe`|
+|`executable`|path to the tool used to parse shellbags|`/home/jvera/Incide/Projects/rvt2/external_tools/windows/ShellBagsExplorer/SBECmd.exe`|
+
+### Job `windows.shellbags_report`
+
+Generates a summary file with all shellbags files sources.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/hives/shellbags.csv`|
+|`path`||`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+
 ### Job `windows.registry`
 
-Dumps Windows Registry hives. Used for indexing.
+Dumps Windows Registry hives. Used for indexing purposes.
 
 #### Configurable parameters
 
@@ -281,9 +342,68 @@ Dumps Windows Registry hives. Used for indexing.
 |`outfile`|path where generated file will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives/registry_dump.json`|
 |`vss`|process Volume Shadow Snapshot|`False`|
 
-### Job `windows.hives`
+### Job `windows.events`
 
-Parse extra registry hives, such as AmCache, ShimCache, ScheduledTasks or ScheduledTasks
+Parse Windows event files to get relevant logs events.
+
+Type `--params path=some_directory` to set a custom directory containing the log files to parse.
+Individual log files are expected to mantain the same name as Windows conventions.
+
+Files parsed:
+- Security
+- System
+- Microsoft-Windows-TerminalServices-RemoteConnectionManager%4Operational
+- Microsoft-Windows-TerminalServices-LocalSessionManager%4Operational
+- Microsoft-Windows-TerminalServices-RDPClient%4Operational
+- Microsoft-Windows-RemoteDesktopServices-RdpCoreTS%4Operational
+- Microsoft-Windows-TaskScheduler%4Operational
+- Microsoft-Windows-Bits-Client%4Operational
+- Microsoft-Windows-DriverFrameworks-UserMode%4Operational
+- Microsoft-Windows-WLAN-AutoConfig%4Operational
+- OAlerts
+- Microsoft-Windows-User Profile Service%4Operational
+- Microsoft-Windows-Shell-Core%4Operational
+- Microsoft-Windows-Partition%4Diagnostic
+- Microsoft-Windows-Kernel-PnP%4Configuration
+- Microsoft-Windows-Ntfs%4Operational
+- Microsoft-Windows-Storage-ClassPnP%4Operational
+- Micrsoft-Windows-DeviceSetupManager%4Admin
+- Micrsoft-Windows-DeviceSetupManager%4Operational
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|Path to directory containing evtx files|`MORGUE/CASENAME/SOURCE/mnt/p*/[Ww][Ii][Nn][Dd][Oo][Ww][Ss]/[Ss]ystem32/[Ww]inevt/[Ll]ogs`|
+|`outfile`|path where the generated file will be stored|`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
+
+### Job `windows.eventartifacts`
+
+Extracts Windows artifacts from event files. It is required to execute `windows.events` before this job
+Artifacts extraced:
+- Login, logoff
+- Poweron, poweroff
+- RDP connections
+- Wifi network artifacts
+- Shared objects
+- Winupdate events
+- Scheduled tasks
+- Installed processes and services
+- BITS
+- USB plugs
+- USB install drivers
+- Office Alerts
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|path to json file gnerated by windows.events job|`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
+|`outdir`|directory where resulting files will be stored|`MORGUE/CASENAME/SOURCE/analysis/events`|
+
+### Job `windows.scheduled_tasks_all`
+
+Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 
 #### Configurable parameters
 
@@ -291,6 +411,21 @@ Parse extra registry hives, such as AmCache, ShimCache, ScheduledTasks or Schedu
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
+|`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
+|`vss`|process Volume Shadow Snapshot|`False`|
+
+### Job `windows.scheduled_tasks`
+
+Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
+Set the directory to search for such artifacts in `path`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.recycle`
@@ -329,6 +464,18 @@ Extracts USB drives data about drivers installation from setupapi.dev.log
 |`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usb`|
 
+### Job `windows.usnjrnl_all`
+
+Parse all NTFS UsnJrnl files found in an image.
+UsnJrnl is the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`vss`|process Volume Shadow Snapshot|`False`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usnjrnl`|
+
 ### Job `windows.usnjrnl`
 
 Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
@@ -339,6 +486,7 @@ Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on f
 |--|--|--|
 |`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usnjrnl`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 
 ### Job `windows.hiberfil`
 
@@ -359,18 +507,18 @@ Parse Background Intelligent Transfer Service (BITS). This is a service to trans
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
+|`path`|path to qmgr0.dat file|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/bits`|
 
 ### Job `windows.activity_cache`
 
-Parse ActivitiesCache database
+Parse ActivitiesCache database.
+Provide a globpath to any ActivitiesCache.db as path
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 
 ### Job `windows.i30`
@@ -386,430 +534,6 @@ Parse I30 files to obtain a timeline
 |`only_slack`|If True, parse only the slack space in INDX_ALLOC blocks.|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/i30`|
 
-### Job `windows.events`
-
-Parse Windows event files to get relevant logs events.
-Files parsed:
-- Security
-- System
-- Microsoft-Windows-TerminalServices-RemoteConnectionManager%4Operational
-- Microsoft-Windows-TerminalServices-LocalSessionManager%4Operational
-- Microsoft-Windows-TerminalServices-RDPClient%4Operational
-- Microsoft-Windows-RemoteDesktopServices-RdpCoreTS%4Operational
-- Microsoft-Windows-TaskScheduler%4Operational
-- Microsoft-Windows-Bits-Client%4Operational
-- Microsoft-Windows-DriverFrameworks-UserMode%4Operational
-- Microsoft-Windows-WLAN-AutoConfig%4Operational
-- OAlerts
-- Microsoft-Windows-User Profile Service%4Operational
-- Microsoft-Windows-Shell-Core%4Operational
-- Microsoft-Windows-Partition%4Diagnostic
-- Microsoft-Windows-Kernel-PnP%4Configuration
-- Microsoft-Windows-Ntfs%4Operational
-- Microsoft-Windows-Storage-ClassPnP%4Operational
-- Micrsoft-Windows-DeviceSetupManager%4Admin
-- Micrsoft-Windows-DeviceSetupManager%4Operational
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`|path where the generated file will be stored|`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.OAlerts`
-
-Parse Windows Securty event file to get relevant logs events
-The path is the absolute location of OAlerts.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.Security`
-
-Parse Windows Securty event file to get relevant logs events
-The path is the absolute location of Security.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.System`
-
-Parse Windows System event file to get relevant logs events
-The path is the absolute location of System.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.RDPRemote`
-
-Parse Windows System event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-TerminalServices-RemoteConnectionManager%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.RDPLocal`
-
-Parse Windows System event file to get relevant logs events
-The path is the absolute location Microsoft-Windows-TerminalServices-LocalSessionManager%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.RDPClient`
-
-Parse Windows System event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-TerminalServices-RDPClient%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.RDPCoreTS`
-
-Parse Windows System event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-RemoteDesktopServices-RdpCoreTS%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.Scheduled`
-
-Parse Windows event files to get relevant scheduled tasks logs events
-The path is the absolute location of Microsoft-Windows-TaskScheduler%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.Bits`
-
-Parse Windows event files to get relevant scheduled tasks logs events
-The path is the absolute location of Microsoft-Windows-Bits-Client%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.Network`
-
-Parse Windows event files to get relevant networking logs events
-The path is the absolute location of Microsoft-Windows-WLAN-AutoConfig%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.USB`
-
-Parse Windows event files to get relevant usb logs events
-The path is the absolute location of Microsoft-Windows-DriverFrameworks-UserMode%4Operational.evtx file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.UserProfile`
-
-Parse Windows UserProfile event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-User Profile Service%4Operational file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.Run`
-
-Parse Windows Microsoft-Windows-Shell-Core%4Operational event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-Shell-Core%4Operational file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.PartitionDiagnostic`
-
-Parse Windows Microsoft-Windows-Partition%4Diagnostic event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-Partition%4Diagnostic file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.KernelPnp`
-
-Parse Windows Microsoft-Windows-Kernel-PnP%4Configuration event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-Kernel-PnP%4Configuration file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.NtfsOperational`
-
-Parse Windows Microsoft-Windows-Ntfs%4Operational event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-Ntfs%4Operational file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.StorageClassPnp`
-
-Parse Windows Microsoft-Windows-Storage-ClassPnP%4Operational event file to get relevant logs events
-The path is the absolute location of Microsoft-Storage-ClassPnP%4Operational file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.DeviceSetupManagerAdmin`
-
-Parse Windows Microsoft-Windows-Micrsoft-Windows-DeviceSetupManager%4Admin event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-Micrsoft-Windows-DeviceSetupManager%4Admin file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.events.DeviceSetupManagerOperational`
-
-Parse Windows Microsoft-Windows-Micrsoft-Windows-DeviceSetupManager%4Operational event file to get relevant logs events
-The path is the absolute location of Microsoft-Windows-Micrsoft-Windows-DeviceSetupManager%4Operational file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
-
-### Job `windows.eventsartifacts`
-
-Extracts windows artifacts from event files. Job 'windows.events' must be executed first
-Artifacts extraced:
-- Login, logoff
-- Poweron, poweroff
-- wifi network artifacts
-- shared objects
-- winupdate events
-- scheduled tasks
-- Install processes and services
-- BITS
-- Usb plugs
-- Usb install drivers
-- OAlerts
-
-### Job `windows.eventartifacts.logon_rdp`
-
-Extract login and rdp artifacts
-The path is the absolute location of event.json file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/rdp.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.logon_rdp2`
-
-Extract login and rdp artifacts
-The path is the absolute location of event.json file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/rdp2.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.logon_rdp_out`
-
-Extract login and rdp artifacts
-The path is the absolute location of event.json file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/rdp_out.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.poweron`
-
-Extract poweron poweroff artifacts
-The path is the absolute location of event.json file.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/power.json`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.network`
-
-Extract shared object events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/network.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.shares`
-
-Extract shared object events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/shares.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.winupdate`
-
-Extract install related events of processes and services
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/winupdate.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.scheduled_tasks`
-
-Extract install related events of processes and services
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/scheduled.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.install`
-
-Extract install related events of processes and services
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/install.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.UserProfile`
-
-Extract autorun related events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/user_profile.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.run`
-
-Extract autorun related events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/run.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.BITS`
-
-Extract BITS events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/bits.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.USB_plug`
-
-Extract USB events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/usb_plugs.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.USB_connections`
-
-Extract USB events 2
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/usb_connections.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
-### Job `windows.eventartifacts.USB_install`
-
-Extract USB events
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/events/usb_install.csv`|
-|`outdir`||`MORGUE/CASENAME/SOURCE/analysis/events`|
-
 ### Job `windows.source_summary`
 
 Tables summary of previously parsed artefacts
@@ -818,8 +542,33 @@ Tables summary of previously parsed artefacts
 
 |Parameter|Description|Default|
 |--|--|--|
-|`sourcedir`||`MORGUE/CASENAME/SOURCE`|
-|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/SOURCE_summary.md`|
+|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/source_summary.md`|
+
+### Job `windows.IR_preforensics`
+
+Main set of forensic analysis jobs to run on Windows artifacts. It assumes artifact files are located under `MORGUE/CASENAME/SOURCE/mnt`
+
+Artifacts parsed:
+
+- MFT Timeline
+- Characterize: `MORGUE/CASENAME/SOURCE/analysis/disk_summary.md`
+- Registry: `MORGUE/CASENAME/SOURCE/output/windows/hives`
+- Event Logs:
+- `MORGUE/CASENAME/SOURCE/output/windows/events`
+- `MORGUE/CASENAME/SOURCE/analysis/events`
+- Lnk and Jumplists:
+- `MORGUE/CASENAME/SOURCE/output/windows/recentfiles`
+- `MORGUE/CASENAME/SOURCE/analysis/recentfiles`
+- Prefetch: `MORGUE/CASENAME/SOURCE/output/windows/execution`
+- Browser History: `MORGUE/CASENAME/SOURCE/output/browsers`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`index_name`|Name of the indice in ElasticSearch|`SOURCE-ecs`|
+|`events_dir`||`MORGUE/CASENAME/SOURCE/output/events`|
+|`source`||`SOURCE`|
 
 
 :::warning

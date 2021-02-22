@@ -19,7 +19,7 @@ Many other plugins use jobs and modules from this plugin to retrieve general inf
 - ``mount``: Mount all partitions of a disk image.
 - ``umount``: Unmount all partitions of a disk image
 - ``fs_timeline``: Generate a timeline of a filesystem according to MFT.
-- ``mft_timeline``: Generate a timeline from an $MFT file.
+- ``mft_timeline``: Generate a timeline given an $MFT file.
 - ``allocfiles``: Generate allocated files in a disk image
 - ``characterize``: Describes basic information about disk and partitions.
 - ``strings``: Extract all strings of printable characters (ascii and unicode) from disk data.
@@ -33,7 +33,6 @@ Many other plugins use jobs and modules from this plugin to retrieve general inf
 - ``skype``: Extract contacts, messages, calls from Skype databases
 - ``skype.maindb``: Auxiliary job to call all queries to skype main.db
 - ``teams``: Extract contacts, messages, calls from Teams databases
-- ``mywindows.chrome_hindsight``: Extract information about Chrome's history, cache, downloads and extensions
 
 ### Job `mount`
 
@@ -87,21 +86,41 @@ The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this director
 
 ### Job `mft_timeline`
 
-Generate a timeline from an $MFT file.
+Generate a timeline given an $MFT file.
 
 The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this directory:
 
 - `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_BODY.csv`: The BODY file, created by fls: for each file in the source, a line including all its timestamps
 - `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_TL.csv`: The timeline file, created by mactime: actions "macb" on all files in the source, ordered by date
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_hour_sum.csv`: if `summary` parameter is set to True, stats on the timeline file, grouped by `time_range`
+
+Set the external command to run in the parameter `cmd`. At this moment a couple of tools are allowed:
+- `MFTECmd.exe`: Requires Windows environment. Recommended configuration:
+- `executable`: `/home/jvera/Incide/Projects/rvt2/external_tools/windows/MFTECmd.exe`,
+- `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --body {outdir} --bodyf {filename} --bdl c --nl`
+- `windows_format`: True
+- `drive_letter`: `c:`
+
+- `analyzeMFT.py`: Recommended configuration:
+- `executable`: `/usr/local/bin/analyzeMFT.py`,
+- `cmd`: `{executable} -f {path} --bodystd --bodyfull -b {outdir}/{filename}`
+- `windows_format`: False
+- `drive_letter`: ``
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`mft_parser`|Application to parse MFT|`/home/juanvi/Incide/Projects/analyzeMFT`|
+|`path`|path to the $MFT file|``|
 |`mactime`||`mactime`|
-|`mft_file`|Path to $MFT file. If not defined, the module uses MORGUE/CASENAME/SOURCE/mnt/p01/$MFT|`MORGUE/CASENAME/SOURCE/mnt/p01/\$MFT`|
-|`outdir`|Save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
+|`cmd`|external command to parse MFT. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|`{executable} -f {path} --bodystd --bodyfull -b {outdir}/{filename}`|
+|`executable`|path to executable app to parse MFT|`/usr/local/bin/analyzeMFT.py`|
+|`windows_format`|set to True if paths must be converted to windows format for execution. For example using wine|`False`|
+|`outdir`|save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
+|`summary`|generate a summary of files by `time_range`|`True`|
+|`time_range`|time range for buckets to split the timeline in the summary. Options: `hour` and `day`|`hour`|
+|`drive_letter`||``|
 |`source`||`SOURCE`|
 |`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
@@ -124,7 +143,7 @@ Describes basic information about disk and partitions.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`|path to file were results are stored (in markdown format)|`MORGUE/CASENAME/SOURCE/analysis/characterize.md`|
+|`outfile`|path to file were results are stored (in markdown format)|`MORGUE/CASENAME/SOURCE/analysis/disk_summary.md`|
 |`template_file`|mako template to display results|`templates/disk.mako`|
 |`file_exists`||`OVERWRITE`|
 
@@ -267,17 +286,6 @@ Extract contacts, messages, calls from Teams databases
 |--|--|--|
 |`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/teams`|
-
-### Job `mywindows.chrome_hindsight`
-
-Extract information about Chrome's history, cache, downloads and extensions
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
-|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/browsers`|
 
 
 :::warning

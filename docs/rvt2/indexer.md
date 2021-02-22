@@ -33,6 +33,8 @@ If you use the ElasticSearch indexer, you'll need an ElasticSearch >=6 server so
 - ``indexer.export_pst``: Export contents of every pst or ost file found in a source using pffexport.
 - ``indexer.mails``: Export, parse and characterize contents of every pst or ost file found in a source. Runs export_pst, pst and characterize_mails
 - ``indexer.pst_item2eml``: Convert a message extracted from a pst to an eml file.
+- ``validate-indexer``: Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
+- ``validate-blindsearches``: Blind searches on a parsed JSON file, result from indexer.save.
 
 ### Job `indexer.parse_file`
 
@@ -77,11 +79,11 @@ You can define the location of the elasticsearch server and username/password us
 |--|--|--|
 |`path`|The path to a JSON file output from indexer.directory.|``|
 |`restartable`|In True, the index can be restarted from an error. Use with care!|`False`|
-|`mapping`|Path to the file describing the mapping of fields to ElasticSearch. The mapping can only be used when the index is created.|`/home/juanvi/Incide/Projects/rvt2/plugins/indexer/es-settings.json`|
+|`mapping`|Path to the file describing the mapping of fields to ElasticSearch. The mapping can only be used when the index is created.|`/home/jvera/Incide/Projects/rvt2/plugins/indexer/es-settings.json`|
 |`name`|Index name in ElasticSearch. If index does not exists, create it.|`SOURCE`|
 |`cooloff_every`|After this number of seconds, wait cooloff_seconds.|`300`|
 |`cooloff_seconds`|Seconds to wait to cool off ElasticSearch.|`5`|
-|`tabs`|Space separated tabs to add to the rvt2-analyzer. Available tabs can be found at "/home/juanvi/Incide/Projects/rvt2/plugins/indexer/analyzer-tabs.json". Examples: files, emails, apache, iis.|``|
+|`tabs`|Space separated tabs to add to the rvt2-analyzer. Available tabs can be found at "/home/jvera/Incide/Projects/rvt2/plugins/indexer/analyzer-tabs.json". Examples: files, emails, apache, iis.|``|
 
 ### Job `indexer.save_directory`
 
@@ -212,6 +214,32 @@ The JSON with the parsed mails will be in MORGUE/CASENAME/SOURCE/output/indexer/
 
 Convert a message extracted from a pst to an eml file.
 * path: the path to a Message folder
+
+### Job `validate-indexer`
+
+Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|The path to the directory to parse|``|
+|`outfile`|Save the result of the parsing in this file|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`|
+|`name`|The name of the indice to save the parsed files|`SOURCE`|
+|`rvtindex`|The name of the indice to save metadata. Set to empty to not save metadata.|`rvtindexer`|
+|`restartable`|If True, parsing can be restarted from the last error. Use with care!|`False`|
+|`filter`|List of file categories to parse. If not provided, parse all files. Predefined categories can be found in "file_categories.cfg" configuration file|``|
+
+### Job `validate-blindsearches`
+
+Blind searches on a parsed JSON file, result from indexer.save.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`keyword_file`|The name of the keyword file in the searches directory.|`kwfile`|
+|`outfile`|Save the results to this file, ready to be used with indexer.save|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.blindsearches.json`|
 
 
 :::warning

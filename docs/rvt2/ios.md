@@ -32,9 +32,9 @@ If ios_dataprotection is used, the password will be asked during the job `ios.un
 
 ## Jobs
 
-- ``ios.unback``: Unback an iOS backup directory or zip file
 - ``ios.preforensics``: Run a selected set of jobs in this module: unback, characterize, databases, cookies, whatsapp
 - ``ios.apollo``: Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO). You must include also the relevant configuration file from RVT2HOME/conf/ios/apollo
+- ``ios.unback``: Unback an iOS backup directory or zip file
 - ``ios.characterize``: Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
 - ``ios.databases``: Parse iOS databases not in the APOLLO project
 - ``ios.timeline``: Parse manifest file and generate a body and a timeline csv using mactime
@@ -43,6 +43,16 @@ If ios_dataprotection is used, the password will be asked during the job `ios.un
 - ``ios.whatsapp``: Split WhastApp messages into several CSVs
 - ``ios.avere_whatsapp``: Avere WhastApp messages in IOS
 - ``ios.chat_to_html``: Convert a WhatsApp conversation to an html file.
+
+### Job `ios.preforensics`
+
+Run a selected set of jobs in this module: unback, characterize, databases, cookies, whatsapp
+The path is an absolute path to a directory containing an iTunes backup, or a ZIP file containing an iTunes backup.
+If the backup is encrypted, define unback_command in the `ios.unback` section.
+
+### Job `ios.apollo`
+
+Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO). You must include also the relevant configuration file from RVT2HOME/conf/ios/apollo
 
 ### Job `ios.unback`
 
@@ -57,16 +67,6 @@ Unback an iOS backup directory or zip file
 |`unzip_path`|In case of unbacking from a zip file, unzip the source to this path before unbacking|`MORGUE/CASENAME/SOURCE/unzip`|
 |`remove_unzip_path`|If set to True (default), delete the unzip directory after unzipping the backup zip file|`True`|
 |`unback_command`|External command to unback in case of encrypted backups. It is a Python string template that receives variables "bk_path" and "extract_path". For example: "python2 backup_tool.py {bk_path} {extract_path}". Check https://github.com/dinosec/iphone-dataprotection/blob/master/python_scripts/backup_tool.py|``|
-
-### Job `ios.preforensics`
-
-Run a selected set of jobs in this module: unback, characterize, databases, cookies, whatsapp
-The path is an absolute path to a directory containing an iTunes backup, or a ZIP file containing an iTunes backup.
-If the backup is encrypted, define unback_command in the `ios.unback` section.
-
-### Job `ios.apollo`
-
-Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO). You must include also the relevant configuration file from RVT2HOME/conf/ios/apollo
 
 ### Job `ios.characterize`
 
@@ -111,6 +111,7 @@ Parse WhatsApp database filtered by message_group
 |`start_date`|If set, output only messages from this date. Example format: 2018-12-25|``|
 |`end_date`|If set, output only messages until this date. Example format: 2020-01-15|``|
 |`username`|Whatsapp owner name. If not provided is taken from other WhatsApp configuration files|``|
+|`localtime`|If True, convert timestamps to current computer local timezone. If False, use UTC.|`True`|
 
 ### Job `ios.whatsapp`
 
@@ -138,6 +139,7 @@ Convert a WhatsApp conversation to an html file.
 |`message_group`|Group the conversation belongs to. It is a number|`1`|
 |`input_whatsapp_csv`|CSV input file with transcripted conversation to convert, relative to message_group folder|`whatsapp.csv`|
 |`template`|Mako template file with html configuration. Relative to current working directory or RVTHOME|`templates/chat2html.mako`|
+|`outfile_name`||`conversation.html`|
 
 
 :::warning

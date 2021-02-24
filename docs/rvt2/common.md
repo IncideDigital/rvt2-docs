@@ -96,7 +96,7 @@ The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this director
 
 Set the external command to run in the parameter `cmd`. At this moment a couple of tools are allowed:
 - `MFTECmd.exe`: Requires Windows environment. Recommended configuration:
-- `executable`: `/home/jvera/Incide/Projects/rvt2/external_tools/windows/MFTECmd.exe`,
+- `executable`: `./external_tools/windows/MFTECmd.exe`,
 - `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --body {outdir} --bodyf {filename} --bdl c --nl`
 - `windows_format`: True
 - `drive_letter`: `c:`
@@ -289,6 +289,6 @@ Extract contacts, messages, calls from Teams databases
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help common --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/common.md"`. Do not modify manually this file.
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
 

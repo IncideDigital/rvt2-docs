@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET=docs
+TARGET=$(pwd)/docs
 
 [[ -z "$RVT2_HOME" ]] && ( echo 'RVT2_HOME must be defined'; exit 1)
 
@@ -11,11 +11,12 @@ function autodoc_plugin {
     PLUGIN=$1
     echo "Documenting plugin $PLUGIN"
     rm -rf "$TARGET/rvt2/$PLUGIN.md"
-    "$RVT2_HOME/rvt2" --morgue MORGUE --casename CASENAME --source SOURCE -j help $PLUGIN --params show_vars="" template_file="templates/help_section_complete.mako" outfile="$TARGET/rvt2/$PLUGIN.md"
+    cd "$RVT2_HOME"
+    "./rvt2" --globals rvthome=. --morgue MORGUE --casename CASENAME --source SOURCE -j help $PLUGIN --params show_vars="" template_file="templates/help_section_complete.mako" outfile="$TARGET/rvt2/$PLUGIN.md"
     cat >> "$TARGET/rvt2/$PLUGIN.md" << EOF
 
 :::warning
-This chapter was created automatically using \`rvt2 -j help $PLUGIN --params show_vars="" template_file="templates/help_section_complete.mako" outfile="$TARGET/rvt2/$PLUGIN.md"\`. Do not modify manually this file.
+This chapter was created automatically using \`autodoc.sh\`. Do not modify manually this file.
 :::
 
 EOF
@@ -28,3 +29,5 @@ autodoc_plugin windows
 autodoc_plugin common
 autodoc_plugin indexer
 autodoc_plugin ios
+autodoc_plugin linux
+autodoc_plugin macos

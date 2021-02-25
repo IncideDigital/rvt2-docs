@@ -143,7 +143,7 @@ Convert a WhatsApp conversation to an html file.
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help ios --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/ios.md"`. Do not modify manually this file.
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
 
 

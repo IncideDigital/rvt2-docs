@@ -1,44 +1,18 @@
-# Plugin: linux
 
-This plugin is.
+# Section linux
 
-You can use this plugin:
-
-- To mount, umount and extract forensics artifacts from logs... from a disk image.
-
-Table of contents:
-
-[[toc]]
+This plugin extracts and analyzes forensic artifacts from a Linux system.
 
 ## Jobs
 
-The plugin defines these jobs:
+- ``linuxforensics``: Jobs to be run on a disk image at the beginning with linux distribution
 
-- `linuxforensics`:
-    -  Mounts partitions
-    -  Generates allocfiles
-    -  Extracts webrowser history artifacts.
-    -  Generates timelines.
-    -  Characterizes disk image
-    -  Generates strings files.
+### Job `linuxforensics`
 
-Example use:
+Jobs to be run on a disk image at the beginning with linux distribution
 
-```
-[Main]
-inherits: index_directory
-path: keywords
 
-[linuxpreforensics]
-[plugins.linux.RVT_linux.Characterize]
-```
+:::warning
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
+:::
 
-## Modules
-
-Currently, this plugin includes the next modules. They are intended to form a chain with the `modules` directive.
-
-### plugins.linux.RVT_linux.Characterize
-
-- Input: None
-- Output: Characterizes linux image.
-- Output path: ``$disk/output/info``

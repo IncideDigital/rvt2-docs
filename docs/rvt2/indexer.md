@@ -223,3 +223,7 @@ The JSON with the parsed mails will be in /morgue/mycase/mysource/output/indexer
 Convert a message extracted from a pst to an eml file.
 * path: the path to a Message folder
 
+
+:::warning
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
+:::

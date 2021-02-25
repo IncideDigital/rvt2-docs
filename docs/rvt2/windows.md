@@ -543,3 +543,7 @@ Tables summary of previously parsed artefacts
 |--|--|--|
 |`outfile`||`/morgue/mycase/mysource/analysis/source_summary.md`|
 
+
+:::warning
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
+:::

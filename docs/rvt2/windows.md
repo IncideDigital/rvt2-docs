@@ -16,7 +16,7 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 - ``windows.rfc``: Extract and parse Windows artifacts related with applications execution (RFC)
 - ``windows.CCM``: Extracts SCCM Software Metering history to get more information about executions
 - ``windows.autorip``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
-- ``windows.registry_hives``: Extracts an extensive set of keys from Windows Registry hives using regripper. Results are organized according to its information type.
+- ``windows.registry_hives``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 - ``windows.amcache``: Parse AmCache hive
 - ``windows.shimcache``: Parse ShimCache hive
 - ``windows.syscache``: Parse SysCache hive
@@ -37,6 +37,7 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 - ``windows.hiberfil``: Decompress hiberfil.sys and extract some artifacts
 - ``windows.bits``: Parse Background Intelligent Transfer Service (BITS). This is a service to transfer binaries between systems, used mainly by Microsoft Update and similar programs.
 - ``windows.activity_cache``: Parse ActivitiesCache database.
+- ``windows.rdp_cache``: Extracts rdp cache images to get more information about outgoing rdp sessions
 - ``windows.i30``: Parse I30 files to obtain a timeline
 - ``windows.source_summary``: Tables summary of previously parsed artefacts
 
@@ -54,12 +55,10 @@ Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcac
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/execution`|
-|`voutdir`|directory where VSS generated files will be stored|`/morgue/mycase/mysource/output/vss/execution`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
-|`executable`|path to the tool used to parse appcompatcache|`./external_tools/windows/AppCompatCacheParser.exe`|
-|`vss`|process Volume Shadow Snapshot|`False`|
+|`executable`|path to the tool used to parse appcompatcache|`/home/pgarcia/rvt2/external_tools/windows/AppCompatCacheParser.exe`|
 
 ### Job `windows.preforensics`
 
@@ -68,29 +67,28 @@ Main set of forensic analysis jobs to run on a Windows disk partition.
 Artifacts parsed:
 
 - MFT Timeline
-- Characterize: `/morgue/mycase/mysource/analysis/disk_summary.md`, `/morgue/mycase/mysource/analysis/os_summary.md`
-- Registry (using Regripper): `/morgue/mycase/mysource/output/windows/hives`
+- Characterize: `MORGUE/CASENAME/SOURCE/analysis/disk_summary.md`, `MORGUE/CASENAME/SOURCE/analysis/os_summary.md`
+- Registry: `MORGUE/CASENAME/SOURCE/output/windows/hives`
 - Event Logs:
-- `/morgue/mycase/mysource/output/windows/events`
-- `/morgue/mycase/mysource/analysis/events`
+- `MORGUE/CASENAME/SOURCE/output/windows/events`
+- `MORGUE/CASENAME/SOURCE/analysis/events`
 - Lnk and Jumplists:
-- `/morgue/mycase/mysource/output/windows/recentfiles`
-- `/morgue/mycase/mysource/analysis/recentfiles`
-- UsnJrnl: `/morgue/mycase/mysource/output/windows/usnjrnl`
-- Prefetch: `/morgue/mycase/mysource/output/windows/execution`
-- Browser History: `/morgue/mycase/mysource/output/browsers`
-- Recycle Bin: `/morgue/mycase/mysource/output/windows/recyclebin`
-- RFC: `/morgue/mycase/mysource/output/windows/execution`
-- Activities Cache: `/morgue/mycase/mysource/output/windows/execution`
-- USB artifacts: `/morgue/mycase/mysource/output/windows/usb`
-- BAM: `/morgue/mycase/mysource/output/windows/execution`
+- `MORGUE/CASENAME/SOURCE/output/windows/recentfiles`
+- `MORGUE/CASENAME/SOURCE/analysis/recentfiles`
+- UsnJrnl: `MORGUE/CASENAME/SOURCE/output/windows/usnjrnl`
+- Prefetch: `MORGUE/CASENAME/SOURCE/output/windows/execution`
+- Browser History: `MORGUE/CASENAME/SOURCE/output/browsers`
+- Recycle Bin: `MORGUE/CASENAME/SOURCE/output/windows/recyclebin`
+- RFC: `MORGUE/CASENAME/SOURCE/output/windows/execution`
+- Activities Cache: `MORGUE/CASENAME/SOURCE/output/windows/execution`
+- USB artifacts: `MORGUE/CASENAME/SOURCE/output/windows/usb`
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
 |`vss`|process Volume Shadow Snapshots|`False`|
-|`timeline_outdir`||`/morgue/mycase/mysource/output/timeline`|
+|`timeline_outdir`||`MORGUE/CASENAME/SOURCE/output/timeline`|
 
 ### Job `windows.characterize`
 
@@ -104,8 +102,8 @@ Information includes:
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`|path to file were results are stored (in markdown format)|`/morgue/mycase/mysource/analysis/os_summary.md`|
-|`aux_file`|json file where OS info will be stored and used by other jobs|`/morgue/mycase/mysource/output/auxdir/os_info.json`|
+|`outfile`|path to file were results are stored (in markdown format)|`MORGUE/CASENAME/SOURCE/analysis/os_summary.md`|
+|`aux_file`|json file where OS info will be stored and used by other jobs|`MORGUE/CASENAME/SOURCE/output/auxdir/os_info.json`|
 |`template_file`|mako template to display results|`templates/os_summary.mako`|
 |`file_exists`||`OVERWRITE`|
 
@@ -119,8 +117,8 @@ It is recommended to run `windows.recentfiles_report` after parsing all possible
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|absolute path to folder containing lnk|automaticdestestination|customdestination files|``|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/recentfiles`|
-|`appid`|path to file relating applications id with names|`./plugins/windows/appID.txt`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
+|`appid`|path to file relating applications id with names|`/home/pgarcia/rvt2/plugins/windows/appID.txt`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`username`|User name identifier|``|
 
@@ -132,8 +130,8 @@ Generates a summary file with all recent files sources.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`lnk_dir`|path to directory where files generated by windows.recentfiles are be stored|`/morgue/mycase/mysource/output/windows/recentfiles`|
-|`outdir`|path to directory where generated analysis files will be stored|`/morgue/mycase/mysource/analysis/recentfiles`|
+|`lnk_dir`|path to directory where files generated by windows.recentfiles are be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
+|`outdir`|path to directory where generated analysis files will be stored|`MORGUE/CASENAME/SOURCE/analysis/recentfiles`|
 
 ### Job `windows.recentfiles_default`
 
@@ -143,10 +141,9 @@ Parse all lnk and jumplist files present in a mounted source. Generates a summar
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/recentfiles`|
-|`outdir_analysis`|path to directory where generated analysis files will be stored|`/morgue/mycase/mysource/analysis/recentfiles`|
-|`appid`|path to file relating applications id with names|`./plugins/windows/appID.txt`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
+|`outdir_analysis`|path to directory where generated analysis files will be stored|`MORGUE/CASENAME/SOURCE/analysis/recentfiles`|
+|`appid`|path to file relating applications id with names|`/home/pgarcia/rvt2/plugins/windows/appID.txt`|
 
 ### Job `windows.execution`
 
@@ -159,8 +156,8 @@ Extract and parse Windows artifacts related with applications execution (Prefetc
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/execution`|
-|`mountdir`||`/morgue/mycase/mysource/mnt`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+|`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
 ### Job `windows.prefetch`
 
@@ -171,7 +168,7 @@ Extract and parse Windows artifacts related with applications execution (Prefetc
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|path to directory containing pf files|``|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/execution`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
 ### Job `windows.rfc`
@@ -183,7 +180,7 @@ Extract and parse Windows artifacts related with applications execution (RFC)
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|path to RecentFileCache.bcf file |``|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/execution`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
 ### Job `windows.CCM`
@@ -196,14 +193,29 @@ The path is the absolute location of Windows/System32/wbem/Repository folder.
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|absolute path Windows/System32/wbem/Repository directory|``|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/execution`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
 ### Job `windows.autorip`
 
 Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 Expects a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
-The list of regripper modules, its description and output file can be found at: `./plugins/windows/autorip.json`
+The list of regripper modules, its description and output file can be found at: `/home/pgarcia/rvt2/plugins/windows/autorip.json`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/pgarcia/rvt2/plugins/windows/autorip.json`|
+|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/pgarcia/rvt2/plugins/windows/regripper_plugins.json`|
+|`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+
+### Job `windows.registry_hives`
+
+Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
+This job takes the default configuration of mounted devices as base to locate hive files to parse.
+Alternatively, you can provide a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
 
 Some of the airtifacts are:
 
@@ -218,29 +230,13 @@ The existence of a Shellbag sub-key for a given directory indicates that the spe
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
-|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`./plugins/windows/autorip.json`|
-|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`./plugins/windows/regripper_plugins.json`|
-|`errorfile`|path to log file to register regripper errors|`/morgue/mycase/mysource/mysource_aux.log`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
-
-### Job `windows.registry_hives`
-
-Extracts an extensive set of keys from Windows Registry hives using regripper. Results are organized according to its information type.
-
-This job takes the default configuration of mounted devices as base to locate hive files to parse
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
 |`path`|absolute path to folder containing hives|``|
-|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`./plugins/windows/autorip.json`|
-|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`./plugins/windows/regripper_plugins.json`|
-|`errorfile`|path to log file to register regripper errors|`/morgue/mycase/mysource/mysource_aux.log`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
+|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/pgarcia/rvt2/plugins/windows/autorip.json`|
+|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/pgarcia/rvt2/plugins/windows/regripper_plugins.json`|
+|`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`casedir`||`/morgue/mycase`|
+|`casedir`||`MORGUE/CASENAME`|
 
 ### Job `windows.amcache`
 
@@ -250,10 +246,8 @@ Parse AmCache hive
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`/morgue/mycase/mysource/output/vss/hives`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.shimcache`
 
@@ -263,10 +257,8 @@ Parse ShimCache hive
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`/morgue/mycase/mysource/output/vss/hives`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.syscache`
 
@@ -276,10 +268,8 @@ Parse SysCache hive
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`/morgue/mycase/mysource/output/vss/hives`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.userassist`
 
@@ -289,11 +279,11 @@ Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Win
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 |`cmd`|External command to parse userassist. It is a Python string template accepting variables "executable", "hive", "outdir", "filename" and "batch_file". Variables "hive" and "filename" are automatically set by the job. The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} --bn {batch_file} -f {hive} --csv {outdir} --csvf {filename} --nl`|
-|`executable`|path to the tool used to parse userassist|`./external_tools/windows/RegistryExplorer/RECmd.exe`|
-|`batch_file`|configuration file for userassist using RECmd.exe|`./external_tools/windows/RegistryExplorer/BatchExamples/BatchExampleUserAssist.reb`|
+|`executable`|path to the tool used to parse userassist|`/home/pgarcia/rvt2/external_tools/windows/RegistryExplorer/RECmd.exe`|
+|`batch_file`|configuration file for userassist using RECmd.exe|`/home/pgarcia/rvt2/external_tools/windows/RegistryExplorer/BatchExamples/BatchExampleUserAssist.reb`|
 
 ### Job `windows.userassist_report`
 
@@ -303,8 +293,8 @@ Generates a summary file with all userassist files sources.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`||`/morgue/mycase/mysource/analysis/hives/userassist.csv`|
-|`path`||`/morgue/mycase/mysource/output/windows/hives`|
+|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/hives/userassist.csv`|
+|`path`||`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 
 ### Job `windows.shellbags`
 
@@ -314,10 +304,10 @@ Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe 
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 |`cmd`|External command to parse shellbags. It is a Python string template accepting variables "executable", "hives_dir" and "outdir". Variable "hives_dir" is deduced by the job from "path". The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} -d {hives_dir} --csv {outdir} --nl --dedupe`|
-|`executable`|path to the tool used to parse shellbags|`./external_tools/windows/ShellBagsExplorer/SBECmd.exe`|
+|`executable`|path to the tool used to parse shellbags|`/home/pgarcia/rvt2/external_tools/windows/ShellBagsExplorer/SBECmd.exe`|
 
 ### Job `windows.shellbags_report`
 
@@ -327,8 +317,8 @@ Generates a summary file with all shellbags files sources.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`||`/morgue/mycase/mysource/analysis/hives/shellbags.csv`|
-|`path`||`/morgue/mycase/mysource/output/windows/hives`|
+|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/hives/shellbags.csv`|
+|`path`||`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 
 ### Job `windows.registry`
 
@@ -338,8 +328,7 @@ Dumps Windows Registry hives. Used for indexing purposes.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`|path where generated file will be stored|`/morgue/mycase/mysource/output/windows/hives/registry_dump.json`|
-|`vss`|process Volume Shadow Snapshot|`False`|
+|`outfile`|path where generated file will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives/registry_dump.json`|
 
 ### Job `windows.events`
 
@@ -373,8 +362,8 @@ Files parsed:
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|Path to directory containing evtx files|`/morgue/mycase/mysource/mnt/p*/[Ww][Ii][Nn][Dd][Oo][Ww][Ss]/[Ss]ystem32/[Ww]inevt/[Ll]ogs`|
-|`outfile`|path where the generated file will be stored|`/morgue/mycase/mysource/output/windows/events/events.json`|
+|`path`|Path to directory containing evtx files|`MORGUE/CASENAME/SOURCE/mnt/p*/[Ww][Ii][Nn][Dd][Oo][Ww][Ss]/[Ss]ystem32/[Ww]inevt/[Ll]ogs`|
+|`outfile`|path where the generated file will be stored|`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
 
 ### Job `windows.eventartifacts`
 
@@ -397,8 +386,8 @@ Artifacts extraced:
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|path to json file gnerated by windows.events job|`/morgue/mycase/mysource/output/windows/events/events.json`|
-|`outdir`|directory where resulting files will be stored|`/morgue/mycase/mysource/analysis/events`|
+|`path`|path to json file gnerated by windows.events job|`MORGUE/CASENAME/SOURCE/output/windows/events/events.json`|
+|`outdir`|directory where resulting files will be stored|`MORGUE/CASENAME/SOURCE/analysis/events`|
 
 ### Job `windows.scheduled_tasks_all`
 
@@ -408,10 +397,8 @@ Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`/morgue/mycase/mysource/output/vss/hives`|
-|`mountdir`||`/morgue/mycase/mysource/mnt`|
-|`vss`|process Volume Shadow Snapshot|`False`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
 ### Job `windows.scheduled_tasks`
 
@@ -422,10 +409,8 @@ Set the directory to search for such artifacts in `path`
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`/morgue/mycase/mysource/output/vss/hives`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.recycle`
 
@@ -436,7 +421,7 @@ Parse files in (or deleted from) Windows Recycle Bin
 |Parameter|Description|Default|
 |--|--|--|
 |`vss`|process Volume Shadow Snapshot|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/recyclebin`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recyclebin`|
 
 ### Job `windows.srum`
 
@@ -449,8 +434,7 @@ the execution of a program.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/srum`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/srum`|
 
 ### Job `windows.usb`
 
@@ -460,8 +444,7 @@ Extracts USB drives data about drivers installation from setupapi.dev.log
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/usb`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usb`|
 
 ### Job `windows.usnjrnl_all`
 
@@ -473,7 +456,7 @@ UsnJrnl is the journal log of NTFS. You will find recent oprations on files: del
 |Parameter|Description|Default|
 |--|--|--|
 |`vss`|process Volume Shadow Snapshot|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/usnjrnl`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usnjrnl`|
 
 ### Job `windows.usnjrnl`
 
@@ -484,7 +467,7 @@ Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on f
 |Parameter|Description|Default|
 |--|--|--|
 |`vss`|process Volume Shadow Snapshot|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/usnjrnl`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usnjrnl`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 
 ### Job `windows.hiberfil`
@@ -495,8 +478,7 @@ Decompress hiberfil.sys and extract some artifacts
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/hibernation`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hibernation`|
 
 ### Job `windows.bits`
 
@@ -507,7 +489,7 @@ Parse Background Intelligent Transfer Service (BITS). This is a service to trans
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|path to qmgr0.dat file|``|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/bits`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/bits`|
 
 ### Job `windows.activity_cache`
 
@@ -518,7 +500,19 @@ Provide a globpath to any ActivitiesCache.db as path
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/execution`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+
+### Job `windows.rdp_cache`
+
+Extracts rdp cache images to get more information about outgoing rdp sessions
+The path is the absolute location of /Users/*/AppData/Local/Microsoft/Terminal Server Client/Cache folder.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|absolute path %USERPROFILE%/AppData/Local/Microsoft/Terminal Server Client/Cache directory|``|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/rdpcache`|
 
 ### Job `windows.i30`
 
@@ -531,7 +525,7 @@ Parse I30 files to obtain a timeline
 |`root`|If True, parse also INDX_ROOT attributes.|`False`|
 |`skip_short`|If True, do not output Windows short format filenames.|`True`|
 |`only_slack`|If True, parse only the slack space in INDX_ALLOC blocks.|`False`|
-|`outdir`|path to directory where generated files will be stored|`/morgue/mycase/mysource/output/windows/i30`|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/i30`|
 
 ### Job `windows.source_summary`
 
@@ -541,5 +535,10 @@ Tables summary of previously parsed artefacts
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`||`/morgue/mycase/mysource/analysis/source_summary.md`|
+|`outfile`||`MORGUE/CASENAME/SOURCE/analysis/source_summary.md`|
+
+
+:::warning
+This chapter was created automatically using `rvt2 -j help windows --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/windows.md"`. Do not modify manually this file.
+:::
 

@@ -45,7 +45,7 @@ The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this director
 
 Set the external command to run in the parameter `cmd`. At this moment a couple of tools are allowed:
 - `MFTECmd.exe`: Requires Windows environment. Recommended configuration:
-- `executable`: `/home/pgarcia/rvt2/external_tools/windows/MFTECmd.exe`,
+- `executable`: `./external_tools/windows/MFTECmd.exe`,
 - `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --body {outdir} --bodyf {filename} --bdl c --nl`
 - `windows_format`: True
 - `drive_letter`: `c:`
@@ -64,7 +64,7 @@ Set the external command to run in the parameter `cmd`. At this moment a couple 
 |`mactime`||`mactime`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 |`cmd`|external command to parse MFT. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} -f {path} --body {outdir} --bodyf {filename} --bdl c --nl`|
-|`executable`|path to executable app to parse MFT|`/home/pgarcia/rvt2/external_tools/windows/MFTECmd.exe`|
+|`executable`|path to executable app to parse MFT|`./external_tools/windows/MFTECmd.exe`|
 |`windows_format`|set to True if paths must be converted to windows format for execution. For example using wine|`True`|
 |`outdir`|save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
 |`summary`|generate a summary of files by `time_range`|`True`|
@@ -283,6 +283,6 @@ Extract contacts, messages, calls from Teams databases
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help common --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/common.md"`. Do not modify manually this file.
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
 

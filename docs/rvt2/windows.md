@@ -29,15 +29,14 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 - ``windows.eventartifacts``: Extracts Windows artifacts from event files. It is required to execute `windows.events` before this job
 - ``windows.scheduled_tasks_all``: Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 - ``windows.scheduled_tasks``: Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
-- ``windows.recycle``: Parse files in (or deleted from) Windows Recycle Bin
+- ``windows.recycle``: Parse files in (or deleted from) Windows Recycle Bin.
 - ``windows.srum``: Extract and parse SRUM (System Resource Utilization Monitor) from a windows OS
 - ``windows.usb``: Extracts USB drives data about drivers installation from setupapi.dev.log
 - ``windows.usnjrnl_all``: Parse all NTFS UsnJrnl files found in an image.
-- ``windows.usnjrnl``: Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
+- ``windows.usnjrnl``: Parse NTFS UsnJrnl file, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
 - ``windows.hiberfil``: Decompress hiberfil.sys and extract some artifacts
 - ``windows.bits``: Parse Background Intelligent Transfer Service (BITS). This is a service to transfer binaries between systems, used mainly by Microsoft Update and similar programs.
 - ``windows.activity_cache``: Parse ActivitiesCache database.
-- ``windows.rdp_cache``: Extracts rdp cache images to get more information about outgoing rdp sessions
 - ``windows.i30``: Parse I30 files to obtain a timeline
 - ``windows.source_summary``: Tables summary of previously parsed artefacts
 
@@ -58,7 +57,7 @@ Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcac
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
-|`executable`|path to the tool used to parse appcompatcache|`/home/pgarcia/rvt2/external_tools/windows/AppCompatCacheParser.exe`|
+|`executable`|path to the tool used to parse appcompatcache|`./external_tools/windows/AppCompatCacheParser.exe`|
 
 ### Job `windows.preforensics`
 
@@ -118,7 +117,7 @@ It is recommended to run `windows.recentfiles_report` after parsing all possible
 |--|--|--|
 |`path`|absolute path to folder containing lnk|automaticdestestination|customdestination files|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
-|`appid`|path to file relating applications id with names|`/home/pgarcia/rvt2/plugins/windows/appID.txt`|
+|`appid`|path to file relating applications id with names|`./plugins/windows/appID.txt`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`username`|User name identifier|``|
 
@@ -143,7 +142,7 @@ Parse all lnk and jumplist files present in a mounted source. Generates a summar
 |--|--|--|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
 |`outdir_analysis`|path to directory where generated analysis files will be stored|`MORGUE/CASENAME/SOURCE/analysis/recentfiles`|
-|`appid`|path to file relating applications id with names|`/home/pgarcia/rvt2/plugins/windows/appID.txt`|
+|`appid`|path to file relating applications id with names|`./plugins/windows/appID.txt`|
 
 ### Job `windows.execution`
 
@@ -200,14 +199,14 @@ The path is the absolute location of Windows/System32/wbem/Repository folder.
 
 Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 Expects a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
-The list of regripper modules, its description and output file can be found at: `/home/pgarcia/rvt2/plugins/windows/autorip.json`
+The list of regripper modules, its description and output file can be found at: `./plugins/windows/autorip.json`
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/pgarcia/rvt2/plugins/windows/autorip.json`|
-|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/pgarcia/rvt2/plugins/windows/regripper_plugins.json`|
+|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`./plugins/windows/autorip.json`|
+|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`./plugins/windows/regripper_plugins.json`|
 |`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 
@@ -231,8 +230,8 @@ The existence of a Shellbag sub-key for a given directory indicates that the spe
 |Parameter|Description|Default|
 |--|--|--|
 |`path`|absolute path to folder containing hives|``|
-|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`/home/pgarcia/rvt2/plugins/windows/autorip.json`|
-|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`/home/pgarcia/rvt2/plugins/windows/regripper_plugins.json`|
+|`ripplugins`|path to json file containing the organized list of regripper plugins to run|`./plugins/windows/autorip.json`|
+|`pluginshives`|path to json file associating each regripper plugin with a list of hives|`./plugins/windows/regripper_plugins.json`|
 |`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
@@ -282,8 +281,8 @@ Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Win
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 |`cmd`|External command to parse userassist. It is a Python string template accepting variables "executable", "hive", "outdir", "filename" and "batch_file". Variables "hive" and "filename" are automatically set by the job. The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} --bn {batch_file} -f {hive} --csv {outdir} --csvf {filename} --nl`|
-|`executable`|path to the tool used to parse userassist|`/home/pgarcia/rvt2/external_tools/windows/RegistryExplorer/RECmd.exe`|
-|`batch_file`|configuration file for userassist using RECmd.exe|`/home/pgarcia/rvt2/external_tools/windows/RegistryExplorer/BatchExamples/BatchExampleUserAssist.reb`|
+|`executable`|path to the tool used to parse userassist|`./external_tools/windows/RegistryExplorer/RECmd.exe`|
+|`batch_file`|configuration file for userassist using RECmd.exe|`./external_tools/windows/RegistryExplorer/BatchExamples/BatchExampleUserAssist.reb`|
 
 ### Job `windows.userassist_report`
 
@@ -307,7 +306,7 @@ Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe 
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 |`cmd`|External command to parse shellbags. It is a Python string template accepting variables "executable", "hives_dir" and "outdir". Variable "hives_dir" is deduced by the job from "path". The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} -d {hives_dir} --csv {outdir} --nl --dedupe`|
-|`executable`|path to the tool used to parse shellbags|`/home/pgarcia/rvt2/external_tools/windows/ShellBagsExplorer/SBECmd.exe`|
+|`executable`|path to the tool used to parse shellbags|`./external_tools/windows/ShellBagsExplorer/SBECmd.exe`|
 
 ### Job `windows.shellbags_report`
 
@@ -414,7 +413,8 @@ Set the directory to search for such artifacts in `path`
 
 ### Job `windows.recycle`
 
-Parse files in (or deleted from) Windows Recycle Bin
+Parse files in (or deleted from) Windows Recycle Bin.
+You must generate the timeline with `fs_timeline` or `mft_timeline` before running the present job.
 
 #### Configurable parameters
 
@@ -460,7 +460,7 @@ UsnJrnl is the journal log of NTFS. You will find recent oprations on files: del
 
 ### Job `windows.usnjrnl`
 
-Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
+Parse NTFS UsnJrnl file, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
 
 #### Configurable parameters
 
@@ -502,18 +502,6 @@ Provide a globpath to any ActivitiesCache.db as path
 |--|--|--|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 
-### Job `windows.rdp_cache`
-
-Extracts rdp cache images to get more information about outgoing rdp sessions
-The path is the absolute location of /Users/*/AppData/Local/Microsoft/Terminal Server Client/Cache folder.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`path`|absolute path %USERPROFILE%/AppData/Local/Microsoft/Terminal Server Client/Cache directory|``|
-|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/rdpcache`|
-
 ### Job `windows.i30`
 
 Parse I30 files to obtain a timeline
@@ -539,6 +527,6 @@ Tables summary of previously parsed artefacts
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help windows --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/windows.md"`. Do not modify manually this file.
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
 

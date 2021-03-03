@@ -77,11 +77,11 @@ You can define the location of the elasticsearch server and username/password us
 |--|--|--|
 |`path`|The path to a JSON file output from indexer.directory.|``|
 |`restartable`|In True, the index can be restarted from an error. Use with care!|`False`|
-|`mapping`|Path to the file describing the mapping of fields to ElasticSearch. The mapping can only be used when the index is created.|`/home/pgarcia/rvt2/plugins/indexer/es-settings.json`|
+|`mapping`|Path to the file describing the mapping of fields to ElasticSearch. The mapping can only be used when the index is created.|`./plugins/indexer/es-settings.json`|
 |`name`|Index name in ElasticSearch. If index does not exists, create it.|`SOURCE`|
 |`cooloff_every`|After this number of seconds, wait cooloff_seconds.|`300`|
 |`cooloff_seconds`|Seconds to wait to cool off ElasticSearch.|`5`|
-|`tabs`|Space separated tabs to add to the rvt2-analyzer. Available tabs can be found at "/home/pgarcia/rvt2/plugins/indexer/analyzer-tabs.json". Examples: files, emails, apache, iis.|``|
+|`tabs`|Space separated tabs to add to the rvt2-analyzer. Available tabs can be found at "./plugins/indexer/analyzer-tabs.json". Examples: files, emails, apache, iis.|``|
 
 ### Job `indexer.save_directory`
 
@@ -225,6 +225,6 @@ Convert a message extracted from a pst to an eml file.
 
 
 :::warning
-This chapter was created automatically using `rvt2 -j help indexer --params show_vars="" template_file="templates/help_section_complete.mako" outfile="docs/rvt2/indexer.md"`. Do not modify manually this file.
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
 

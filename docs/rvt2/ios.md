@@ -32,9 +32,9 @@ If ios_dataprotection is used, the password will be asked during the job `ios.un
 
 ## Jobs
 
+- ``ios.characterize``: Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
 - ``ios.preforensics``: Run a selected set of jobs in this module: unback, characterize, databases, cookies, whatsapp
 - ``ios.unback``: Unback an iOS backup directory or zip file
-- ``ios.characterize``: Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
 - ``ios.timeline``: Parse manifest file and generate a body and a timeline csv using mactime
 - ``ios.apollo_auto``: Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO).
 - ``ios.apollo``: Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO).
@@ -44,7 +44,20 @@ If ios_dataprotection is used, the password will be asked during the job `ios.un
 - ``ios.whatsapp_single``: Parse WhatsApp database filtered by message_group
 - ``ios.avere_whatsapp``: Check WhatsApp databases consistency for traces of manipulation. Only valid for old iOS versions
 - ``ios.chat_to_html``: Convert a WhatsApp conversation to an html file
+- ``ios.whatsapp_kw``: Search keywords in WhatsApp conversations
 - ``ios.jailbreak``: Search for jailbreak traces in iOS devices. Requires the previous execution of `allocfiles`
+
+### Job `ios.characterize`
+
+Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|path to device root directory|``|
+|`outfile`|path where generated csv file will be stored|`MORGUE/CASENAME/SOURCE/analysis/characterize.csv`|
+|`outfile_json`|path where generated json file will be stored|`MORGUE/CASENAME/SOURCE/analysis/os_info.json`|
 
 ### Job `ios.preforensics`
 
@@ -65,18 +78,6 @@ Unback an iOS backup directory or zip file
 |`unzip_path`|In case of unbacking from a zip file, unzip the source to this path before unbacking|`MORGUE/CASENAME/SOURCE/unzip`|
 |`remove_unzip_path`|If set to True (default), delete the unzip directory after unzipping the backup zip file|`True`|
 |`unback_command`|External command to unback in case of encrypted backups. It is a Python string template that receives variables "bk_path" and "extract_path". For example: "python2 backup_tool.py {bk_path} {extract_path}". Check https://github.com/dinosec/iphone-dataprotection/blob/master/python_scripts/backup_tool.py|``|
-
-### Job `ios.characterize`
-
-Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`path`|path to device root directory|``|
-|`outfile`|path where generated csv file will be stored|`MORGUE/CASENAME/SOURCE/analysis/characterize.csv`|
-|`outfile_json`|path where generated json file will be stored|`MORGUE/CASENAME/SOURCE/analysis/os_info.json`|
 
 ### Job `ios.timeline`
 
@@ -156,7 +157,31 @@ Convert a WhatsApp conversation to an html file
 |`message_group`|Group the conversation belongs to. It is a number|`1`|
 |`input_whatsapp_csv`|CSV input file with transcripted conversation to convert, relative to message_group folder|`whatsapp.csv`|
 |`template`|Mako template file with html configuration. Relative to current working directory or RVTHOME|`templates/chat2html.mako`|
-|`outfile_name`||`conversation.html`|
+|`outfile_name`|output html filename to save results, relative to message_group folder|`conversation.html`|
+
+### Job `ios.whatsapp_kw`
+
+Search keywords in WhatsApp conversations
+The list of keywords must be defined in a separated file, `kw_file`, including
+the keyword label and (optionally) a regex as "LABEL:::REGEX".  If the regex is
+not provided, the modules uses the label as the regex to search.
+
+Example of keyword file:
+
+```
+myfirstword
+mysecondword:::[Mm]y.econd{1,2}word
+```
+
+The job `ios.whatsapp` must had been executed before the present job
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|path to the main results folder from `ios.whatsapp`|``|
+|`kw_file`|path to file containing a list of keywords|`MORGUE/CASENAME/searches_files/keywords`|
+|`outfile_name`|output html filename to save results, relative to message_group folder|`conversation_kw.html`|
 
 ### Job `ios.jailbreak`
 

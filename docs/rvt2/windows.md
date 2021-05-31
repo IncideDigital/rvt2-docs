@@ -5,21 +5,24 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 
 ## Jobs
 
-- ``windows.appcompatcache``: Parse AppcompatCache from SYSTEM registry hive
 - ``windows.preforensics``: Main set of forensic analysis jobs to run on a Windows disk partition.
 - ``windows.characterize``: Describes basic information about Windows partitions and users.
 - ``windows.recentfiles``: Parse lnk and jumplist files in a directory.
 - ``windows.recentfiles_report``: Generates a summary file with all recent files sources.
-- ``windows.recentfiles_default``: Parse all lnk and jumplist files present in a mounted source. Generates a summary file with all recent files sources.
+- ``windows.recentfiles_default``: Parse all lnk and jumplist files present in a mounted source.
 - ``windows.execution``: Extract and parse Windows artifacts related with applications execution (Prefetch, RFC).
 - ``windows.prefetch``: Extract and parse Windows artifacts related with applications execution (Prefetch)
 - ``windows.rfc``: Extract and parse Windows artifacts related with applications execution (RFC)
 - ``windows.CCM``: Extracts SCCM Software Metering history to get more information about executions
+- ``windows.activities_cache``: Parse ActivitiesCache database.
+- ``windows.ual``: Parse User Access Logs.
+- ``windows.rdp_cache``: Extracts rdp cache images to get more information about outgoing rdp sessions
 - ``windows.autorip``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 - ``windows.registry_hives``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 - ``windows.amcache``: Parse AmCache hive
 - ``windows.shimcache``: Parse ShimCache hive
 - ``windows.syscache``: Parse SysCache hive
+- ``windows.appcompatcache``: Parse AppcompatCache from SYSTEM registry hive
 - ``windows.userassist``: Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Windows environment is needed to execute it.
 - ``windows.userassist_report``: Generates a summary file with all userassist files sources.
 - ``windows.shellbags``: Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe to parse. Windows environment is needed to execute it.
@@ -36,28 +39,9 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 - ``windows.usnjrnl``: Parse NTFS UsnJrnl file, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
 - ``windows.hiberfil``: Decompress hiberfil.sys and extract some artifacts
 - ``windows.bits``: Parse Background Intelligent Transfer Service (BITS). This is a service to transfer binaries between systems, used mainly by Microsoft Update and similar programs.
-- ``windows.activity_cache``: Parse ActivitiesCache database.
 - ``windows.i30``: Parse I30 files to obtain a timeline
+- ``windows.source_summary_old``: Tables summary of previously parsed artefacts
 - ``windows.source_summary``: Tables summary of previously parsed artefacts
-
-### Job `windows.appcompatcache`
-
-Parse AppcompatCache from SYSTEM registry hive
-Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcache
-
-- Regripper ppcompat plugin. Recommended configuration:
-- `cmd`: ``
-- AppCompatCacheParser.exe. Recommended configuration:
-- `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --csv {outdir} --csvf {filename} --nl`
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
-|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
-|`executable`|path to the tool used to parse appcompatcache|`./external_tools/windows/AppCompatCacheParser.exe`|
 
 ### Job `windows.preforensics`
 
@@ -109,7 +93,8 @@ Information includes:
 ### Job `windows.recentfiles`
 
 Parse lnk and jumplist files in a directory.
-It is recommended to run `windows.recentfiles_report` after parsing all possible recentfiles with the present job
+For enhanced parsing results, it is recommended to run `fs_timelines` or `mft_timeline` first.
+To create a summary of all recentfiles run `windows.recentfiles_report` after the present job.
 
 #### Configurable parameters
 
@@ -134,7 +119,9 @@ Generates a summary file with all recent files sources.
 
 ### Job `windows.recentfiles_default`
 
-Parse all lnk and jumplist files present in a mounted source. Generates a summary file with all recent files sources.
+Parse all lnk and jumplist files present in a mounted source.
+Generates a summary file with all recent files sources.
+For enhanced parsing results, it is recommended to run `fs_timelines` or `mft_timeline` first.
 
 #### Configurable parameters
 
@@ -195,35 +182,57 @@ The path is the absolute location of Windows/System32/wbem/Repository folder.
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
-### Job `windows.autorip`
+### Job `windows.activities_cache`
 
-Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
-Expects a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
-The list of regripper modules, its description and output file can be found at: `./plugins/windows/autorip.json`
-<<<<<<< HEAD
-
-Some of the airtifacts are:
-
-- Shellbags: Shellbag information is available only for folders that have been opened and closed in Windows Explorer at least once.
-The existence of a Shellbag sub-key for a given directory indicates that the specific user account once visited that folder.
-- Jumplists: Recent documents in a program that is pinned to your taskbar.
-- Recentdocs: Recent documents, as listed in the registry. They may or not may be the same than the jumplist. They are used (but not only) in Microsoft Office.
-- Shimcache: tracks compatibilities issues with executed programs: path, size, last modified time, last updated time, process execution flag
-- Amcache: stores information about executed programs: path, executed time, deleted time, first installation
-=======
->>>>>>> cd68f39746df58f985bb0c3253f94d87b292b60b
+Parse ActivitiesCache database.
+Provide a globpath to any ActivitiesCache.db as path
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-<<<<<<< HEAD
-|`vss`|process Volume Shadow Snapshot|`False`|
-=======
->>>>>>> cd68f39746df58f985bb0c3253f94d87b292b60b
+|`path`|glob pattern to any ActivitiesCache.db to be parsed|``|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+|`volume_id`|volume identifier, such as partition number. Caution: set this parameter only when a single input file is expected. Ex: p03|``|
+
+### Job `windows.ual`
+
+Parse User Access Logs.
+Provide a globpath to mdb files in `/Windows/System32/LogFiles/Sum` as path
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|glob pattern to any mdb file in /Windows/System32/Sum to be parsed|``|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/ual`|
+
+### Job `windows.rdp_cache`
+
+Extracts rdp cache images to get more information about outgoing rdp sessions
+The path is the absolute location of Users/*/AppData/Local/Microsoft/Terminal*/Cache folder.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|absolute path %USERPROFILE%/AppData/Local/Microsoft/Terminal Server Client/Cache directory|``|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/rdpcache`|
+
+### Job `windows.autorip`
+
+Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
+Expects a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
+The list of regripper modules, its description and output file can be found at: `./plugins/windows/autorip.json`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
 |`ripplugins`|path to json file containing the organized list of regripper plugins to run|`./plugins/windows/autorip.json`|
 |`pluginshives`|path to json file associating each regripper plugin with a list of hives|`./plugins/windows/regripper_plugins.json`|
 |`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 
 ### Job `windows.registry_hives`
@@ -285,15 +294,13 @@ Parse SysCache hive
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-<<<<<<< HEAD
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.appcompatcache`
 
 Parse AppcompatCache from SYSTEM registry hive
 Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcache
 
-- Regripper ppcompat plugin. Recommended configuration:
+- Regripper appcompat plugin. Recommended configuration:
 - `cmd`: ``
 - AppCompatCacheParser.exe. Recommended configuration:
 - `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --csv {outdir} --csvf {filename} --nl`
@@ -302,18 +309,16 @@ Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcac
 
 |Parameter|Description|Default|
 |--|--|--|
+|`path`|path to SYSTEM registry hive|``|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
-|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 |`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
 |`executable`|path to the tool used to parse appcompatcache|`./external_tools/windows/AppCompatCacheParser.exe`|
-|`vss`|process Volume Shadow Snapshot|`False`|
-=======
->>>>>>> cd68f39746df58f985bb0c3253f94d87b292b60b
 
 ### Job `windows.userassist`
 
 Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Windows environment is needed to execute it.
+Expects a path to Windows `Users` directory as an argument, in order to search for any NTUSER.DAT hive.
 
 #### Configurable parameters
 
@@ -339,6 +344,7 @@ Generates a summary file with all userassist files sources.
 ### Job `windows.shellbags`
 
 Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe to parse. Windows environment is needed to execute it.
+Expects a path to Windows `Users` directory as an argument, in order to search for any NTUSER.DAT hive.
 
 #### Configurable parameters
 
@@ -437,7 +443,7 @@ Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
 ### Job `windows.scheduled_tasks`
@@ -449,7 +455,7 @@ Set the directory to search for such artifacts in `path`
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
 ### Job `windows.recycle`
@@ -475,17 +481,23 @@ the execution of a program.
 
 |Parameter|Description|Default|
 |--|--|--|
+|`path`|path to SRUDB.dat file to parse|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/srum`|
+|`software_hive`|path, in glob format, to SOFTWARE hive|`MORGUE/CASENAME/SOURCE/mnt/p*/[Ww]indows/[Ss]ystem32/[Cc]onfig/SOFTWARE`|
 
 ### Job `windows.usb`
 
 Extracts USB drives data about drivers installation from setupapi.dev.log
+Expects a path to setupapi.dev.log file as argument.
+If no argument is provided, it will search on all allocated files mounted. Make sure to run `allocfiles` before this job if this is the case.
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
+|`path`|path to setupapi.dev.log file. If not provided, the job will search in all allocated files|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usb`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
 
 ### Job `windows.usnjrnl_all`
 
@@ -514,12 +526,18 @@ Parse NTFS UsnJrnl file, the journal log of NTFS. You will find recent oprations
 ### Job `windows.hiberfil`
 
 Decompress hiberfil.sys and extract some artifacts
+Provide an hiberfil.sys file as an argument or let the job search in allocated files if no argument is provided
+Requires `allocfiles` and `windows.characterize` if no path or profile is provided
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hibernation`|
+|`volatility_plugins`|Space separated list of volatility plugins to run|`pslist netscan filescan shutdowntime mftparser`|
+|`profile`|Windows profile describing version as expected by volatility. Ex: Win10x64. It will be searched in the current registry if not provided|``|
+|`overwrite_imagecopy`|If true, make a new imagecopy of hiberfil.sys even if a previous one already existed|`False`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
 
 ### Job `windows.bits`
 
@@ -531,17 +549,6 @@ Parse Background Intelligent Transfer Service (BITS). This is a service to trans
 |--|--|--|
 |`path`|path to qmgr0.dat file|``|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/bits`|
-
-### Job `windows.activity_cache`
-
-Parse ActivitiesCache database.
-Provide a globpath to any ActivitiesCache.db as path
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
 
 ### Job `windows.i30`
 
@@ -556,7 +563,7 @@ Parse I30 files to obtain a timeline
 |`only_slack`|If True, parse only the slack space in INDX_ALLOC blocks.|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/i30`|
 
-### Job `windows.source_summary`
+### Job `windows.source_summary_old`
 
 Tables summary of previously parsed artefacts
 
@@ -565,6 +572,17 @@ Tables summary of previously parsed artefacts
 |Parameter|Description|Default|
 |--|--|--|
 |`outfile`||`MORGUE/CASENAME/SOURCE/analysis/source_summary.md`|
+
+### Job `windows.source_summary`
+
+Tables summary of previously parsed artefacts
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outfile`|path to file where results will be stored|`MORGUE/CASENAME/SOURCE/analysis/source_summary.md`|
+|`tz_name`|tzdata/Olsen timezone name to set for the dates. Examples: `Europe/Berlin`, `America/New_York`, `UTC`. If `local` is set, timezone will be searched on the registry|`local`|
 
 
 :::warning

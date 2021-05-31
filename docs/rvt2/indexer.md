@@ -29,14 +29,22 @@ If you use the ElasticSearch indexer, you'll need an ElasticSearch >=6 server so
 - ``indexer.tag_and_export``: Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`.
 - ``indexer.blind_searches``: Blind searches on a parsed JSON file, result from indexer.save.
 - ``indexer.index_timeline_body``: Index a BODY file provided in the path.
-- ``indexer.pst``: Parse PST files previously exported with indexer.export_pst.
 - ``indexer.export_pst``: Export contents of every pst or ost file found in a source using pffexport.
+- ``indexer.pst``: Parse PST files previously exported with indexer.export_pst.
 - ``indexer.mails``: Export, parse and characterize contents of every pst or ost file found in a source. Runs export_pst, pst and characterize_mails
 - ``indexer.pst_item2eml``: Convert a message extracted from a pst to an eml file.
+- ``validate-indexer``: Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
+- ``validate-blindsearches``: Blind searches on a parsed JSON file, result from indexer.save.
 
 ### Job `indexer.parse_file`
 
 Parse a file and show the result in the standard output. Use for debugging.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`only_root`|Parse only the root file|`False`|
 
 ### Job `indexer.parse_directory`
 
@@ -69,7 +77,7 @@ Save a previously indexed database in an ElasticSearch server. Alternative to `e
 
 You can define the location of the elasticsearch server and username/password using:
 
-`--globals indexer:es_hosts="https://elastic.incide.es:443" --globals indexer:es_username=USERNAME --globals indexer:es_password=PASSWORD`
+`--globals indexer:es_hosts="http://localhost:9200" --globals indexer:es_username=USERNAME --globals indexer:es_password=PASSWORD`
 
 #### Configurable parameters
 
@@ -171,7 +179,7 @@ Blind searches on a parsed JSON file, result from indexer.save.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`keyword_file`|The name of the keyword file in the searches directory.|`kw`|
+|`keyword_file`|The name of the keyword file in the searches directory.|`MORGUE/CASENAME/searches_files/kw`|
 |`outfile`|Save the results to this file, ready to be used with indexer.save|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.blindsearches.json`|
 
 ### Job `indexer.index_timeline_body`
@@ -186,18 +194,6 @@ information from both timeline and Tika parsing may be combined and updated.
 |--|--|--|
 |`outfile`||`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.timeline.json`|
 
-### Job `indexer.pst`
-
-Parse PST files previously exported with indexer.export_pst.
-This module also calls to indexer.pst.secondary.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`outfile`|A JSON file with all the information in the mailboxes, ready to be imported into ElasticSearch|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.pst.json`|
-|`path`|An absolute path to pstfiles.csv, output from indexer.export_pst|`MORGUE/CASENAME/SOURCE/output/mail/pstfiles.csv`|
-
 ### Job `indexer.export_pst`
 
 Export contents of every pst or ost file found in a source using pffexport.
@@ -209,6 +205,18 @@ This job depends on plugins.common and the succesful generation of alloc_files.
 |--|--|--|
 |`outfile`|A CSV containing the path to the actual pstfiles and their reference|`MORGUE/CASENAME/SOURCE/output/mail/pstfiles.csv`|
 |`outdir`|Export the contents of PST files to this directory|`MORGUE/CASENAME/SOURCE/output/mail/`|
+
+### Job `indexer.pst`
+
+Parse PST files previously exported with indexer.export_pst.
+This module also calls to indexer.pst.secondary.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outfile`|A JSON file with all the information in the mailboxes, ready to be imported into ElasticSearch|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.pst.json`|
+|`path`|An absolute path to pstfiles.csv, output from indexer.export_pst|`MORGUE/CASENAME/SOURCE/output/mail/pstfiles.csv`|
 
 ### Job `indexer.mails`
 
@@ -222,6 +230,32 @@ The JSON with the parsed mails will be in MORGUE/CASENAME/SOURCE/output/indexer/
 
 Convert a message extracted from a pst to an eml file.
 * path: the path to a Message folder
+
+### Job `validate-indexer`
+
+Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|The path to the directory to parse|``|
+|`outfile`|Save the result of the parsing in this file|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`|
+|`name`|The name of the indx to save the parsed files|`SOURCE`|
+|`rvtindex`|The name of the index to save metadata. Set to empty to not save metadata.|`rvtindexer`|
+|`restartable`|If True, parsing can be restarted from the last error. Use with care!|`False`|
+|`filter`|List of file categories to parse. If not provided, parse all files. Predefined categories can be found in "file_categories.cfg" configuration file|``|
+
+### Job `validate-blindsearches`
+
+Blind searches on a parsed JSON file, result from indexer.save.
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`keyword_file`|The name of the keyword file in the searches directory.|`kwfile`|
+|`outfile`|Save the results to this file, ready to be used with indexer.save|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.blindsearches.json`|
 
 
 :::warning

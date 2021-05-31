@@ -197,4 +197,3 @@ Search for jailbreak traces in iOS devices. Requires the previous execution of `
 :::warning
 This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
-

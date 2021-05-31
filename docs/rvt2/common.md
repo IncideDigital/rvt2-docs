@@ -87,6 +87,7 @@ The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this director
 |`outdir`|Save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
 |`summary`|Generate a summary of files by `time_range`|`True`|
 |`time_range`|Time range for buckets to split the timeline in the summary. Options: `hour` and `day`|`hour`|
+<<<<<<< HEAD
 
 ### Job `mft_timeline_default`
 
@@ -147,6 +148,8 @@ Set the external command to run in the parameter `cmd`. At this moment a couple 
 |`drive_letter`||``|
 |`source`||`SOURCE`|
 |`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
+=======
+>>>>>>> 48148590a4a33bee6ea91815b014559b5adbd963
 
 ### Job `allocfiles`
 
@@ -307,3 +310,7 @@ Extract contacts, messages, calls from Teams databases
 This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
 
+
+:::warning
+This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
+:::

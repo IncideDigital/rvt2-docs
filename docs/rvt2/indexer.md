@@ -261,4 +261,3 @@ Blind searches on a parsed JSON file, result from indexer.save.
 :::warning
 This chapter was created automatically using `autodoc.sh`. Do not modify manually this file.
 :::
-

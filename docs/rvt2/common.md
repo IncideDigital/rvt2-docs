@@ -16,23 +16,62 @@ Many other plugins use jobs and modules from this plugin to retrieve general inf
 
 ## Jobs
 
+- ``mft_timeline``: Generate a timeline given an $MFT file.
 - ``mount``: Mount all partitions of a disk image.
 - ``umount``: Unmount all partitions of a disk image
-- ``fs_timeline``: Generate a timeline of a filesystem according to MFT.
-- ``mft_timeline``: Generate a timeline given an $MFT file.
+- ``fs_timeline``: Generate a timeline of a filesystem.
 - ``allocfiles``: Generate allocated files in a disk image
 - ``characterize``: Describes basic information about disk and partitions.
 - ``strings``: Extract all strings of printable characters (ascii and unicode) from disk data.
-- ``search_strings``: Search a predefined set of keywords in an image strings.
-- ``search_email``: Search emails patterns in strings
-- ``search_accounts``: Search account patterns in strings
-- ``search_gmail``: Search gmail specific parameters in strings
+- ``search_strings``: Search a predefined set of keywords over an image strings.
+- ``search_email``: Search emails patterns in strings. `strings` job must be executed before
+- ``search_accounts``: Search account patterns in strings. `strings` job must be executed before
+- ``search_gmail``: Search gmail specific parameters in strings. `strings` job must be executed before
 - ``search_output``: Search regular expressions in a source output directories, except for strings, searches and parser folders.
 - ``browsers``: Parse history, downloads and cookies from most used browsers: Chrome, Firefox, Safari, Edge, InternetExplorer
 - ``characterize_mails``: Create basic summary about mail accounts from a source.
 - ``skype``: Extract contacts, messages, calls from Skype databases
-- ``skype.maindb``: Auxiliary job to call all queries to skype main.db
 - ``teams``: Extract contacts, messages, calls from Teams databases
+
+### Job `mft_timeline`
+
+Generate a timeline given an $MFT file.
+
+The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this directory:
+
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_BODY.csv`: The BODY file, created by fls: for each file in the source, a line including all its timestamps
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_TL.csv`: The timeline file, created by mactime: actions "macb" on all files in the source, ordered by date
+- `MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_hour_sum.csv`: if `summary` parameter is set to True, stats on the timeline file, grouped by `time_range`
+
+Set the external command to run in the parameter `cmd`. At this moment a couple of tools are allowed:
+- `MFTECmd.exe`: Requires Windows environment. Recommended configuration:
+- `executable`: `./external_tools/windows/MFTECmd.exe`,
+- `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --body {outdir} --bodyf {filename} --bdl c --nl`
+- `windows_format`: True
+- `drive_letter`: `c:`
+
+- `analyzeMFT.py`: Recommended configuration:
+- `executable`: `/usr/local/bin/analyzeMFT.py`,
+- `cmd`: `{executable} -f {path} --bodystd --bodyfull -b {outdir}/{filename}`
+- `windows_format`: False
+- `drive_letter`: ``
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|path to the $MFT file|``|
+|`mactime`||`mactime`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|`p01`|
+|`cmd`|external command to parse MFT. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|`env WINEDEBUG=fixme-all wine {executable} -f {path} --body {outdir} --bodyf {filename} --bdl c --nl`|
+|`executable`|path to executable app to parse MFT|`./external_tools/windows/MFTECmd.exe`|
+|`windows_format`|set to True if paths must be converted to windows format for execution. For example using wine|`True`|
+|`outdir`|save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
+|`summary`|generate a summary of files by `time_range`|`True`|
+|`time_range`|time range for buckets to split the timeline in the summary. Options: `hour` and `day`|`hour`|
+|`drive_letter`||`c:`|
+|`source`||`SOURCE`|
+|`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
 
 ### Job `mount`
 
@@ -49,11 +88,12 @@ Examples:
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|If provided, it is an absolute path to the image to mount. If not provided, mount `MORGUE/images/CASENAME/SOURCE.extension`, where extension is 001, dd, raw, aff, aff4, vmdx (experimental) or zip|``|
+|`path`|If provided, it is an absolute path to the image to mount. If not provided, mount `MORGUE/images/CASENAME//SOURCE.extension`, where extension is 001, dd, raw, aff, aff4, vmdx (experimental) or zip|``|
 |`vss`|If True and the image is a Windows OS, mount Virtual Shadows|`False`|
 |`recovery_keys`|comma separated list of recovery keys for bitlocker encrypted partitions|``|
 |`password`|password for FileVault encrypted volume|``|
 |`partitions`|comma separated list of partitions to mount. Ex: "p03,p05,v1p05"|``|
+|`remove_info`|if True, remove previous information gathered about disk. Use this if any error occurs|`False`|
 
 ### Job `umount`
 
@@ -63,12 +103,13 @@ Unmount all partitions of a disk image
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|ignored|``|
+|`path`|If provided, it is an absolute path to the image to unmount. If not provided, unmount `MORGUE/images/CASENAME//SOURCE.extension`, where extension is 001, dd, raw, aff, aff4, vmdx (experimental) or zip|``|
 |`mountdir`|unmount all mounted partitions in mountdir. Can be set on "DEFAULT" configuration option|`MORGUE/CASENAME/SOURCE/mnt`|
+|`remove_info`|if True, remove previous information gathered about disk. Use this if any error occurs|`False`|
 
 ### Job `fs_timeline`
 
-Generate a timeline of a filesystem according to MFT.
+Generate a timeline of a filesystem.
 
 The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this directory:
 
@@ -80,8 +121,8 @@ The output will be in "MORGUE/CASENAME/SOURCE/output/timeline". In this director
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|If provided, it is the imagefile or device. If not, the module uses MORGUE/images/CASENAME/SOURCE.extension, where extension is 001, dd, raw, aff, aff4, zip or vmdx|``|
-|`vss`|process Volume Shadow Snapshots|`False`|
+|`path`|If provided, it is the imagefile or device. If not, the module uses MORGUE/images/CASENAME//SOURCE.extension, where extension is 001, dd, raw, aff, aff4, zip or vmdx|``|
+|`vss`|Create the timeline for a Volume Shadow Snapshots source|`False`|
 |`outdir`|Save body and timeline this directory. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/timeline`|
 
 ### Job `mft_timeline`
@@ -132,7 +173,6 @@ Generate allocated files in a disk image
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored. Many other modules depend on this files. Do not change outdir unless you know what you are doing|`MORGUE/CASENAME/SOURCE/output/auxdir`|
 
 ### Job `characterize`
@@ -156,7 +196,7 @@ Output files are organized by partition, encoding and allocation status in
 If a path is provided, search for strings in that path. This is useful, for example, for filesystems
 that need an intermediate file to be mounted, such as a bitlocker partition.
 
-If the path is not provided or it is empty, guess the image file from the files avaible in `MORGUE/images/CASENAME`.
+If the path is not provided or it is empty, guess the image file from the files avaible in `MORGUE/images/CASENAME/`.
 
 #### Configurable parameters
 
@@ -167,7 +207,7 @@ If the path is not provided or it is empty, guess the image file from the files 
 
 ### Job `search_strings`
 
-Search a predefined set of keywords in an image strings.
+Search a predefined set of keywords over an image strings.
 
 The list of keywords must be defined in a separated file, including the
 keyword label and (optionally) a regex as "LABEL:::REGEX".  If the regex is
@@ -192,7 +232,7 @@ mysecondword:::[Mm]y.econd{1,2}word
 
 ### Job `search_email`
 
-Search emails patterns in strings
+Search emails patterns in strings. `strings` job must be executed before
 
 #### Configurable parameters
 
@@ -202,7 +242,7 @@ Search emails patterns in strings
 
 ### Job `search_accounts`
 
-Search account patterns in strings
+Search account patterns in strings. `strings` job must be executed before
 
 #### Configurable parameters
 
@@ -212,7 +252,7 @@ Search account patterns in strings
 
 ### Job `search_gmail`
 
-Search gmail specific parameters in strings
+Search gmail specific parameters in strings. `strings` job must be executed before
 
 #### Configurable parameters
 
@@ -235,13 +275,11 @@ Search regular expressions in a source output directories, except for strings, s
 ### Job `browsers`
 
 Parse history, downloads and cookies from most used browsers: Chrome, Firefox, Safari, Edge, InternetExplorer
-When parsing VSS, please introduce the corresponding `outdir` and `vss=False`
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/browsers`|
 
 ### Job `characterize_mails`
@@ -269,12 +307,7 @@ Extract contacts, messages, calls from Skype databases
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/skype`|
-
-### Job `skype.maindb`
-
-Auxiliary job to call all queries to skype main.db
 
 ### Job `teams`
 
@@ -284,7 +317,6 @@ Extract contacts, messages, calls from Teams databases
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/teams`|
 
 

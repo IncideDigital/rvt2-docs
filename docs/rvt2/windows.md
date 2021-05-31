@@ -5,6 +5,7 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 
 ## Jobs
 
+- ``windows.appcompatcache``: Parse AppcompatCache from SYSTEM registry hive
 - ``windows.preforensics``: Main set of forensic analysis jobs to run on a Windows disk partition.
 - ``windows.characterize``: Describes basic information about Windows partitions and users.
 - ``windows.recentfiles``: Parse lnk and jumplist files in a directory.
@@ -15,11 +16,10 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 - ``windows.rfc``: Extract and parse Windows artifacts related with applications execution (RFC)
 - ``windows.CCM``: Extracts SCCM Software Metering history to get more information about executions
 - ``windows.autorip``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
-- ``windows.registry_hives``: Extracts an extensive set of keys from Windows Registry hives using regripper. Results are organized according to its information type.
+- ``windows.registry_hives``: Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 - ``windows.amcache``: Parse AmCache hive
 - ``windows.shimcache``: Parse ShimCache hive
 - ``windows.syscache``: Parse SysCache hive
-- ``windows.appcompatcache``: Parse AppcompatCache from SYSTEM registry hive
 - ``windows.userassist``: Parse userassist key in NTUSER.DAT hive. By default uses RECmd.exe to parse. Windows environment is needed to execute it.
 - ``windows.userassist_report``: Generates a summary file with all userassist files sources.
 - ``windows.shellbags``: Parse Shellbags in NTUSER.DAT or usrclass.dat hives. By default uses SBECmd.exe to parse. Windows environment is needed to execute it.
@@ -29,17 +29,35 @@ This plugin extracts and analyzes forensic artifacts from a Windows system.
 - ``windows.eventartifacts``: Extracts Windows artifacts from event files. It is required to execute `windows.events` before this job
 - ``windows.scheduled_tasks_all``: Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 - ``windows.scheduled_tasks``: Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
-- ``windows.recycle``: Parse files in (or deleted from) Windows Recycle Bin
+- ``windows.recycle``: Parse files in (or deleted from) Windows Recycle Bin.
 - ``windows.srum``: Extract and parse SRUM (System Resource Utilization Monitor) from a windows OS
 - ``windows.usb``: Extracts USB drives data about drivers installation from setupapi.dev.log
 - ``windows.usnjrnl_all``: Parse all NTFS UsnJrnl files found in an image.
-- ``windows.usnjrnl``: Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
+- ``windows.usnjrnl``: Parse NTFS UsnJrnl file, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
 - ``windows.hiberfil``: Decompress hiberfil.sys and extract some artifacts
 - ``windows.bits``: Parse Background Intelligent Transfer Service (BITS). This is a service to transfer binaries between systems, used mainly by Microsoft Update and similar programs.
 - ``windows.activity_cache``: Parse ActivitiesCache database.
 - ``windows.i30``: Parse I30 files to obtain a timeline
 - ``windows.source_summary``: Tables summary of previously parsed artefacts
-- ``windows.IR_preforensics``: Main set of forensic analysis jobs to run on Windows artifacts. It assumes artifact files are located under `MORGUE/CASENAME/SOURCE/mnt`
+
+### Job `windows.appcompatcache`
+
+Parse AppcompatCache from SYSTEM registry hive
+Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcache
+
+- Regripper ppcompat plugin. Recommended configuration:
+- `cmd`: ``
+- AppCompatCacheParser.exe. Recommended configuration:
+- `cmd`: `env WINEDEBUG=fixme-all wine {executable} -f {path} --csv {outdir} --csvf {filename} --nl`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/execution`|
+|`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+|`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
+|`executable`|path to the tool used to parse appcompatcache|`./external_tools/windows/AppCompatCacheParser.exe`|
 
 ### Job `windows.preforensics`
 
@@ -49,7 +67,7 @@ Artifacts parsed:
 
 - MFT Timeline
 - Characterize: `MORGUE/CASENAME/SOURCE/analysis/disk_summary.md`, `MORGUE/CASENAME/SOURCE/analysis/os_summary.md`
-- Registry (using Regripper): `MORGUE/CASENAME/SOURCE/output/windows/hives`
+- Registry: `MORGUE/CASENAME/SOURCE/output/windows/hives`
 - Event Logs:
 - `MORGUE/CASENAME/SOURCE/output/windows/events`
 - `MORGUE/CASENAME/SOURCE/analysis/events`
@@ -63,7 +81,6 @@ Artifacts parsed:
 - RFC: `MORGUE/CASENAME/SOURCE/output/windows/execution`
 - Activities Cache: `MORGUE/CASENAME/SOURCE/output/windows/execution`
 - USB artifacts: `MORGUE/CASENAME/SOURCE/output/windows/usb`
-- BAM: `MORGUE/CASENAME/SOURCE/output/windows/execution`
 
 #### Configurable parameters
 
@@ -123,7 +140,6 @@ Parse all lnk and jumplist files present in a mounted source. Generates a summar
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshots|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/recentfiles`|
 |`outdir_analysis`|path to directory where generated analysis files will be stored|`MORGUE/CASENAME/SOURCE/analysis/recentfiles`|
 |`appid`|path to file relating applications id with names|`./plugins/windows/appID.txt`|
@@ -184,6 +200,7 @@ The path is the absolute location of Windows/System32/wbem/Repository folder.
 Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
 Expects a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
 The list of regripper modules, its description and output file can be found at: `./plugins/windows/autorip.json`
+<<<<<<< HEAD
 
 Some of the airtifacts are:
 
@@ -193,12 +210,17 @@ The existence of a Shellbag sub-key for a given directory indicates that the spe
 - Recentdocs: Recent documents, as listed in the registry. They may or not may be the same than the jumplist. They are used (but not only) in Microsoft Office.
 - Shimcache: tracks compatibilities issues with executed programs: path, size, last modified time, last updated time, process execution flag
 - Amcache: stores information about executed programs: path, executed time, deleted time, first installation
+=======
+>>>>>>> cd68f39746df58f985bb0c3253f94d87b292b60b
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
+<<<<<<< HEAD
 |`vss`|process Volume Shadow Snapshot|`False`|
+=======
+>>>>>>> cd68f39746df58f985bb0c3253f94d87b292b60b
 |`ripplugins`|path to json file containing the organized list of regripper plugins to run|`./plugins/windows/autorip.json`|
 |`pluginshives`|path to json file associating each regripper plugin with a list of hives|`./plugins/windows/regripper_plugins.json`|
 |`errorfile`|path to log file to register regripper errors|`MORGUE/CASENAME/SOURCE/SOURCE_aux.log`|
@@ -206,9 +228,18 @@ The existence of a Shellbag sub-key for a given directory indicates that the spe
 
 ### Job `windows.registry_hives`
 
-Extracts an extensive set of keys from Windows Registry hives using regripper. Results are organized according to its information type.
+Extracts an extensive set of keys from Windows Registry hives. Results are organized according to its information type.
+This job takes the default configuration of mounted devices as base to locate hive files to parse.
+Alternatively, you can provide a directory containing hives as an argument. `NTUSER.DAT` and `usrclass.dat` hives are expected to be stored in a username folder inside the directory set as path.
 
-This job takes the default configuration of mounted devices as base to locate hive files to parse
+Some of the airtifacts are:
+
+- Shellbags: Shellbag information is available only for folders that have been opened and closed in Windows Explorer at least once.
+The existence of a Shellbag sub-key for a given directory indicates that the specific user account once visited that folder.
+- Jumplists: Recent documents in a program that is pinned to your taskbar.
+- Recentdocs: Recent documents, as listed in the registry. They may or not may be the same than the jumplist. They are used (but not only) in Microsoft Office.
+- Shimcache: tracks compatibilities issues with executed programs: path, size, last modified time, last updated time, process execution flag
+- Amcache: stores information about executed programs: path, executed time, deleted time, first installation
 
 #### Configurable parameters
 
@@ -231,9 +262,7 @@ Parse AmCache hive
 |Parameter|Description|Default|
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.shimcache`
 
@@ -244,9 +273,7 @@ Parse ShimCache hive
 |Parameter|Description|Default|
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.syscache`
 
@@ -257,8 +284,8 @@ Parse SysCache hive
 |Parameter|Description|Default|
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
+<<<<<<< HEAD
 |`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.appcompatcache`
@@ -281,6 +308,8 @@ Choose between using regripper or AppCompatCacheParser.exe to parse appcompatcac
 |`cmd`|External command to parse userassist or empty to use internal parser. It is a Python string template accepting variables "executable", "path", "outdir" and "filename". Variable "filename" is automatically set by the job. The rest are the same ones specified in parameters|``|
 |`executable`|path to the tool used to parse appcompatcache|`./external_tools/windows/AppCompatCacheParser.exe`|
 |`vss`|process Volume Shadow Snapshot|`False`|
+=======
+>>>>>>> cd68f39746df58f985bb0c3253f94d87b292b60b
 
 ### Job `windows.userassist`
 
@@ -340,7 +369,6 @@ Dumps Windows Registry hives. Used for indexing purposes.
 |Parameter|Description|Default|
 |--|--|--|
 |`outfile`|path where generated file will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives/registry_dump.json`|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.events`
 
@@ -410,9 +438,7 @@ Parse Task Scheduler Service artifacts such as SCHEDLGU.TXT and .job files
 |Parameter|Description|Default|
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
 |`mountdir`||`MORGUE/CASENAME/SOURCE/mnt`|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.scheduled_tasks`
 
@@ -424,13 +450,12 @@ Set the directory to search for such artifacts in `path`
 |Parameter|Description|Default|
 |--|--|--|
 |`outdir`|directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hives`|
-|`voutdir`|directory where VSS generated files will be stored|`MORGUE/CASENAME/SOURCE/output/vss/hives`|
 |`volume_id`|volume identifier, such as partition number. Ex: p03|``|
-|`vss`|process Volume Shadow Snapshot|`False`|
 
 ### Job `windows.recycle`
 
-Parse files in (or deleted from) Windows Recycle Bin
+Parse files in (or deleted from) Windows Recycle Bin.
+You must generate the timeline with `fs_timeline` or `mft_timeline` before running the present job.
 
 #### Configurable parameters
 
@@ -450,7 +475,6 @@ the execution of a program.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/srum`|
 
 ### Job `windows.usb`
@@ -461,7 +485,6 @@ Extracts USB drives data about drivers installation from setupapi.dev.log
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/usb`|
 
 ### Job `windows.usnjrnl_all`
@@ -478,7 +501,7 @@ UsnJrnl is the journal log of NTFS. You will find recent oprations on files: del
 
 ### Job `windows.usnjrnl`
 
-Parse NTFS UsnJrnl, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
+Parse NTFS UsnJrnl file, the journal log of NTFS. You will find recent oprations on files: deletion, modification, renaming...
 
 #### Configurable parameters
 
@@ -496,7 +519,6 @@ Decompress hiberfil.sys and extract some artifacts
 
 |Parameter|Description|Default|
 |--|--|--|
-|`vss`|process Volume Shadow Snapshot|`False`|
 |`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/windows/hibernation`|
 
 ### Job `windows.bits`
@@ -543,32 +565,6 @@ Tables summary of previously parsed artefacts
 |Parameter|Description|Default|
 |--|--|--|
 |`outfile`||`MORGUE/CASENAME/SOURCE/analysis/source_summary.md`|
-
-### Job `windows.IR_preforensics`
-
-Main set of forensic analysis jobs to run on Windows artifacts. It assumes artifact files are located under `MORGUE/CASENAME/SOURCE/mnt`
-
-Artifacts parsed:
-
-- MFT Timeline
-- Characterize: `MORGUE/CASENAME/SOURCE/analysis/disk_summary.md`
-- Registry: `MORGUE/CASENAME/SOURCE/output/windows/hives`
-- Event Logs:
-- `MORGUE/CASENAME/SOURCE/output/windows/events`
-- `MORGUE/CASENAME/SOURCE/analysis/events`
-- Lnk and Jumplists:
-- `MORGUE/CASENAME/SOURCE/output/windows/recentfiles`
-- `MORGUE/CASENAME/SOURCE/analysis/recentfiles`
-- Prefetch: `MORGUE/CASENAME/SOURCE/output/windows/execution`
-- Browser History: `MORGUE/CASENAME/SOURCE/output/browsers`
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`index_name`|Name of the indice in ElasticSearch|`SOURCE-ecs`|
-|`events_dir`||`MORGUE/CASENAME/SOURCE/output/events`|
-|`source`||`SOURCE`|
 
 
 :::warning

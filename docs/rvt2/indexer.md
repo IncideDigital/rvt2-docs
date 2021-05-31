@@ -26,15 +26,13 @@ If you use the ElasticSearch indexer, you'll need an ElasticSearch >=6 server so
 - ``indexer.convert_csv``: Convert a CSV file to a JSON suitable to be sent to ElasticSearch using indexer.save
 - ``indexer.query_and_tag``: Query elastic, select all related documents (containers, attachments..) and tag all of them. You must indexer.save the output
 - ``indexer.export``: Query elastic, select all documents matching a query and export them to a JSON.
-- ``indexer.tag_and_export``: Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`. You MUST run indexer.save to the remote ES_HOST on target.json
+- ``indexer.tag_and_export``: Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`.
 - ``indexer.blind_searches``: Blind searches on a parsed JSON file, result from indexer.save.
 - ``indexer.index_timeline_body``: Index a BODY file provided in the path.
 - ``indexer.pst``: Parse PST files previously exported with indexer.export_pst.
 - ``indexer.export_pst``: Export contents of every pst or ost file found in a source using pffexport.
 - ``indexer.mails``: Export, parse and characterize contents of every pst or ost file found in a source. Runs export_pst, pst and characterize_mails
 - ``indexer.pst_item2eml``: Convert a message extracted from a pst to an eml file.
-- ``validate-indexer``: Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
-- ``validate-blindsearches``: Blind searches on a parsed JSON file, result from indexer.save.
 
 ### Job `indexer.parse_file`
 
@@ -60,8 +58,8 @@ Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json
 |--|--|--|
 |`path`|The path to the directory to parse|``|
 |`outfile`|Save the result of the parsing in this file|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`|
-|`name`|The name of the indice to save the parsed files|`SOURCE`|
-|`rvtindex`|The name of the indice to save metadata. Set to empty to not save metadata.|`rvtindexer`|
+|`name`|The name of the indx to save the parsed files|`SOURCE`|
+|`rvtindex`|The name of the index to save metadata. Set to empty to not save metadata.|`rvtindexer`|
 |`restartable`|If True, parsing can be restarted from the last error. Use with care!|`False`|
 |`filter`|List of file categories to parse. If not provided, parse all files. Predefined categories can be found in "file_categories.cfg" configuration file|``|
 
@@ -71,7 +69,7 @@ Save a previously indexed database in an ElasticSearch server. Alternative to `e
 
 You can define the location of the elasticsearch server and username/password using:
 
-`--globals indexer:es_hosts="http://localhost:9200" --globals indexer:es_username=USERNAME --globals indexer:es_password=PASSWORD`
+`--globals indexer:es_hosts="https://elastic.incide.es:443" --globals indexer:es_username=USERNAME --globals indexer:es_password=PASSWORD`
 
 #### Configurable parameters
 
@@ -97,10 +95,11 @@ Convert a JSON file to a JSON suitable to be sent to ElasticSearch using indexer
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`||`output.json`|
+|`path`|the CSV file to convert. It must be provided|``|
+|`outfile`|path to the generated json file|`output.json`|
 |`disableCommonFields`||`True`|
 |`generate_id`||`False`|
-|`index_name`||`SOURCE`|
+|`index_name`|name of the destination index at Elastic|`SOURCE`|
 
 ### Job `indexer.convert_csv`
 
@@ -113,10 +112,12 @@ Convert a CSV file to a JSON suitable to be sent to ElasticSearch using indexer.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`outfile`||`output.csv`|
+|`path`|the CSV file to convert. It must be provided|``|
+|`outfile`|path to the generated json file|`output.json`|
 |`delimiter`||`;`|
 |`disableCommonFields`||`True`|
 |`generate_id`||`False`|
+|`index_name`|name of the destination index at Elastic|`SOURCE`|
 
 ### Job `indexer.query_and_tag`
 
@@ -126,8 +127,9 @@ Query elastic, select all related documents (containers, attachments..) and tag 
 
 |Parameter|Description|Default|
 |--|--|--|
+|`index_name`|The name of the index to query. The name will be converted to lower case, since ES only accept lower case names. Wildcards can be used|`SOURCE`|
 |`outfile`|The output of the job. You must indexer.save this file|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`|
-|`query`|The query to run|`*`|
+|`query`|The query to run in lucene language|`*`|
 |`tag`|The name of the tag|`EXPORT`|
 |`tag_field`|Save tags in this field. Use one of the registered tag fields in ElasticSearchBulkIndex (hints: tags-new or blindsearches-new)|`tags-new`|
 |`max_results`|If the query will return more than this number of results, stop.|`1000`|
@@ -135,27 +137,31 @@ Query elastic, select all related documents (containers, attachments..) and tag 
 ### Job `indexer.export`
 
 Query elastic, select all documents matching a query and export them to a JSON.
-The target JSON file must be saved to another ElasticSearch using `indexer.save`.
+The target JSON file may then be saved to any ElasticSearch server using `indexer.save`.
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`query`|The query to run.|`*`|
-|`target`|The output wil be saved in file `target.json` and directory `target`.|`export`|
+|`outfile`|The output of the job. You must indexer.save this file|`MORGUE/CASENAME/SOURCE/output/indexer/export.json`|
+|`index_name`|The name of the index to query. The name will be converted to lower case, since ES only accept lower case names. Wildcards can be used|`SOURCE`|
+|`query`|The query to run in lucene language|`*`|
+|`max_results`|If the query will return more than this number of results, stop|`1000`|
 
 ### Job `indexer.tag_and_export`
 
-Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`. You MUST run indexer.save to the remote ES_HOST on target.json
+Runs `indexer.query_and_tag`, `indexer.save`, `indexer.export`.
+In order to save the results to Elastic, you must run `indexer.save` to any desired ES_HOST on `MORGUE/CASENAME/SOURCE/output/indexer/exported.json`
 
 #### Configurable parameters
 
 |Parameter|Description|Default|
 |--|--|--|
-|`interfile`||`original.json`|
+|`interfile`||`MORGUE/CASENAME/SOURCE/output/indexer/original.json`|
 |`query`|The query to run. See `indexer.query_and_tag`.|`*`|
-|`tag`|The name of the tag. See `indexer.query_and_tag`.|`exported`|
-|`target`|The output wil be saved in file `target.json` and directory `target`. See `indexer.export`.|`exported`|
+|`index_name`|The name of the index to query|`SOURCE`|
+|`tag`|The name of the tag. See `indexer.query_and_tag`.|`EXPORT`|
+|`outfile`|The output of the job. You must indexer.save this file|`MORGUE/CASENAME/SOURCE/output/indexer/exported.json`|
 
 ### Job `indexer.blind_searches`
 
@@ -171,6 +177,8 @@ Blind searches on a parsed JSON file, result from indexer.save.
 ### Job `indexer.index_timeline_body`
 
 Index a BODY file provided in the path.
+Since `_id` for each file is shared with `indexer_directory` results,
+information from both timeline and Tika parsing may be combined and updated.
 
 #### Configurable parameters
 
@@ -187,8 +195,8 @@ This module also calls to indexer.pst.secondary.
 
 |Parameter|Description|Default|
 |--|--|--|
-|`path`|An absolute path to pstfiles.csv, output from indexer.export_pst|``|
 |`outfile`|A JSON file with all the information in the mailboxes, ready to be imported into ElasticSearch|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.pst.json`|
+|`path`|An absolute path to pstfiles.csv, output from indexer.export_pst|`MORGUE/CASENAME/SOURCE/output/mail/pstfiles.csv`|
 
 ### Job `indexer.export_pst`
 
@@ -214,32 +222,6 @@ The JSON with the parsed mails will be in MORGUE/CASENAME/SOURCE/output/indexer/
 
 Convert a message extracted from a pst to an eml file.
 * path: the path to a Message folder
-
-### Job `validate-indexer`
-
-Parse a directory and save in `MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`. This file is compatible with indexers.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`path`|The path to the directory to parse|``|
-|`outfile`|Save the result of the parsing in this file|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.json`|
-|`name`|The name of the indice to save the parsed files|`SOURCE`|
-|`rvtindex`|The name of the indice to save metadata. Set to empty to not save metadata.|`rvtindexer`|
-|`restartable`|If True, parsing can be restarted from the last error. Use with care!|`False`|
-|`filter`|List of file categories to parse. If not provided, parse all files. Predefined categories can be found in "file_categories.cfg" configuration file|``|
-
-### Job `validate-blindsearches`
-
-Blind searches on a parsed JSON file, result from indexer.save.
-
-#### Configurable parameters
-
-|Parameter|Description|Default|
-|--|--|--|
-|`keyword_file`|The name of the keyword file in the searches directory.|`kwfile`|
-|`outfile`|Save the results to this file, ready to be used with indexer.save|`MORGUE/CASENAME/SOURCE/output/indexer/SOURCE.blindsearches.json`|
 
 
 :::warning

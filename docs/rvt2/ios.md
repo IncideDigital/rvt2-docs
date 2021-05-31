@@ -33,26 +33,24 @@ If ios_dataprotection is used, the password will be asked during the job `ios.un
 ## Jobs
 
 - ``ios.preforensics``: Run a selected set of jobs in this module: unback, characterize, databases, cookies, whatsapp
-- ``ios.apollo``: Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO). You must include also the relevant configuration file from RVT2HOME/conf/ios/apollo
 - ``ios.unback``: Unback an iOS backup directory or zip file
 - ``ios.characterize``: Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
-- ``ios.databases``: Parse iOS databases not in the APOLLO project
 - ``ios.timeline``: Parse manifest file and generate a body and a timeline csv using mactime
+- ``ios.apollo_auto``: Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO).
+- ``ios.apollo``: Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO).
+- ``ios.databases``: Parse other iOS databases not in the APOLLO project, such as calendar, location, addressbook, notes or recordings.
 - ``ios.cookies``: Parse cookies in /HomeDomain/Library/Cookies
+- ``ios.whatsapp``: Parse and split WhastApp messages into several CSVs
 - ``ios.whatsapp_single``: Parse WhatsApp database filtered by message_group
-- ``ios.whatsapp``: Split WhastApp messages into several CSVs
-- ``ios.avere_whatsapp``: Avere WhastApp messages in IOS
-- ``ios.chat_to_html``: Convert a WhatsApp conversation to an html file.
+- ``ios.avere_whatsapp``: Check WhatsApp databases consistency for traces of manipulation. Only valid for old iOS versions
+- ``ios.chat_to_html``: Convert a WhatsApp conversation to an html file
+- ``ios.jailbreak``: Search for jailbreak traces in iOS devices. Requires the previous execution of `allocfiles`
 
 ### Job `ios.preforensics`
 
 Run a selected set of jobs in this module: unback, characterize, databases, cookies, whatsapp
 The path is an absolute path to a directory containing an iTunes backup, or a ZIP file containing an iTunes backup.
 If the backup is encrypted, define unback_command in the `ios.unback` section.
-
-### Job `ios.apollo`
-
-Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO). You must include also the relevant configuration file from RVT2HOME/conf/ios/apollo
 
 ### Job `ios.unback`
 
@@ -72,9 +70,13 @@ Unback an iOS backup directory or zip file
 
 Characterizes an iPhone backup. This backup must be previously unbacked. See job plugins.ios.unback.Unback
 
-### Job `ios.databases`
+#### Configurable parameters
 
-Parse iOS databases not in the APOLLO project
+|Parameter|Description|Default|
+|--|--|--|
+|`path`|path to device root directory|``|
+|`outfile`|path where generated csv file will be stored|`MORGUE/CASENAME/SOURCE/analysis/characterize.csv`|
+|`outfile_json`|path where generated json file will be stored|`MORGUE/CASENAME/SOURCE/analysis/os_info.json`|
 
 ### Job `ios.timeline`
 
@@ -88,6 +90,21 @@ Parse manifest file and generate a body and a timeline csv using mactime
 |`outfile_csv_hour`||`MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_hour_sum.csv`|
 |`outfile_csv`||`MORGUE/CASENAME/SOURCE/output/timeline/SOURCE_TL.csv`|
 
+### Job `ios.apollo_auto`
+
+Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO).
+You must run `ios.characterize` before or the job will not get the current iOS version.
+
+### Job `ios.apollo`
+
+Parse iOS databases from the APOLLO project (https://github.com/mac4n6/APOLLO).
+You must include also the relevant configuration file from RVT2HOME/conf/ios/apollo. Check the device iOS version and run:
+`rvt2 -c RVT2HOME/conf/ios/apollo/rvt2-ios-VERSION.ini -j ios.apollo `
+
+### Job `ios.databases`
+
+Parse other iOS databases not in the APOLLO project, such as calendar, location, addressbook, notes or recordings.
+
 ### Job `ios.cookies`
 
 Parse cookies in /HomeDomain/Library/Cookies
@@ -97,6 +114,10 @@ Parse cookies in /HomeDomain/Library/Cookies
 |Parameter|Description|Default|
 |--|--|--|
 |`outfile`||`MORGUE/CASENAME/SOURCE/output/ios/cookies.csv`|
+
+### Job `ios.whatsapp`
+
+Parse and split WhastApp messages into several CSVs
 
 ### Job `ios.whatsapp_single`
 
@@ -113,13 +134,9 @@ Parse WhatsApp database filtered by message_group
 |`username`|Whatsapp owner name. If not provided is taken from other WhatsApp configuration files|``|
 |`localtime`|If True, convert timestamps to current computer local timezone. If False, use UTC.|`True`|
 
-### Job `ios.whatsapp`
-
-Split WhastApp messages into several CSVs
-
 ### Job `ios.avere_whatsapp`
 
-Avere WhastApp messages in IOS
+Check WhatsApp databases consistency for traces of manipulation. Only valid for old iOS versions
 
 #### Configurable parameters
 
@@ -130,7 +147,7 @@ Avere WhastApp messages in IOS
 
 ### Job `ios.chat_to_html`
 
-Convert a WhatsApp conversation to an html file.
+Convert a WhatsApp conversation to an html file
 
 #### Configurable parameters
 
@@ -140,6 +157,16 @@ Convert a WhatsApp conversation to an html file.
 |`input_whatsapp_csv`|CSV input file with transcripted conversation to convert, relative to message_group folder|`whatsapp.csv`|
 |`template`|Mako template file with html configuration. Relative to current working directory or RVTHOME|`templates/chat2html.mako`|
 |`outfile_name`||`conversation.html`|
+
+### Job `ios.jailbreak`
+
+Search for jailbreak traces in iOS devices. Requires the previous execution of `allocfiles`
+
+#### Configurable parameters
+
+|Parameter|Description|Default|
+|--|--|--|
+|`outdir`|path to directory where generated files will be stored|`MORGUE/CASENAME/SOURCE/output/ios/jailbreak`|
 
 
 :::warning

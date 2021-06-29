@@ -16,3 +16,7 @@ footer: GPL Licensed | Copyright © 2018-2021 INCIDE Digital Data S.L.
 ::: warning
 Running RVT2 is not for the faint-hearted. Even if the system is highly stable and we use it during our everyday work, there are lots of rough edges here and there.
 :::
+
+This project was funded by the Spanish Government, under the Torres-Quevedo 2016 programme.
+
+![](./logo1.png) ![](./logo2.jpg)

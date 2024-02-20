@@ -12,7 +12,7 @@ function autodoc_plugin {
     echo "Documenting plugin $PLUGIN"
     rm -rf "$TARGET/rvt2/$PLUGIN.md"
     cd "$RVT2_HOME"
-    "./rvt2" --globals rvthome=. --morgue MORGUE --casename CASENAME --source SOURCE -j help $PLUGIN --params show_vars="" template_file="templates/help_section_complete.mako" outfile="$TARGET/rvt2/$PLUGIN.md"
+    "./rvt2" --globals rvthome=. --morgue MORGUE --client CLIENT --casename CASENAME --source SOURCE -j help $PLUGIN --params show_vars="" template_file="templates/help_section_complete.mako" outfile="$TARGET/rvt2/$PLUGIN.md"
     cat >> "$TARGET/rvt2/$PLUGIN.md" << EOF
 
 :::warning
